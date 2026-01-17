@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phillcode Agent Qualification Exam</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a3a 0%, #0d1b2a 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .exam-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .exam-header {
+            background: linear-gradient(90deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px 40px;
+            text-align: center;
+        }
+        
+        .exam-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .exam-header h2 {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+        
+        .exam-info {
+            background: #f8f9fa;
+            padding: 20px 40px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 15px 5px 0;
+        }
+        
+        .info-item i {
+            color: #3498db;
+            margin-right: 8px;
+        }
+        
+        .exam-body {
+            display: flex;
+            min-height: 700px;
+        }
+        
+        .question-nav {
+            width: 300px;
+            background: #f8f9fa;
+            border-right: 1px solid #e9ecef;
+            padding: 25px;
+            overflow-y: auto;
+        }
+        
+        .question-nav h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .question-buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .q-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #3498db;
+            background: white;
+            color: #2c3e50;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .q-btn:hover {
+            background: #3498db;
+            color: white;
+        }
+        
+        .q-btn.active {
+            background: #2c3e50;
+            border-color: #2c3e50;
+            color: white;
+        }
+        
+        .q-btn.answered {
+            background: #27ae60;
+            border-color: #27ae60;
+            color: white;
+        }
+        
+        .section-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin: 20px 0 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .progress-container {
+            margin-top: 20px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: #3498db;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .question-content {
+            flex: 1;
+            padding: 30px 40px;
+            overflow-y: auto;
+        }
+        
+        .question-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            border-left: 5px solid #3498db;
+            display: none;
+        }
+        
+        .question-card.active {
+            display: block;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        
+        .question-type {
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: #2c3e50;
+            line-height: 1.5;
+        }
+        
+        .question-points {
+            color: #27ae60;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        /* Multiple Choice Options */
+        .options-container {
+            margin: 20px 0;
+        }
+        
+        .option {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .option:hover {
+            background: #e3f2fd;
+            border-color: #3498db;
+        }
+        
+        .option.selected {
+            background: #d4edda;
+            border-color: #27ae60;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        /* True/False Options */
+        .tf-options {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .tf-btn {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .tf-btn:hover {
+            background: #e3f2fd;
+            border-color: #3498db;
+        }
+        
+        .tf-btn.selected {
+            background: #d4edda;
+            border-color: #27ae60;
+            color: #155724;
+        }
+        
+        /* Text Input */
+        .text-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-top: 10px;
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .short-input {
+            min-height: 50px;
+            max-width: 500px;
+        }
+        
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nav-btn i {
+            font-size: 0.9rem;
+        }
+        
+        .prev-btn {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .prev-btn:hover {
+            background: #5a6268;
+        }
+        
+        .next-btn {
+            background: #3498db;
+            color: white;
+        }
+        
+        .next-btn:hover {
+            background: #2980b9;
+        }
+        
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+        }
+        
+        .submit-btn:hover {
+            background: #219653;
+        }
+        
+        /* Results Section */
+        .results-container {
+            text-align: center;
+            padding: 50px 40px;
+            display: none;
+        }
+        
+        .results-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .results-icon {
+            font-size: 4rem;
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+        
+        .results-title {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .score-display {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #27ae60;
+            margin: 20px 0;
+        }
+        
+        .score-text {
+            font-size: 1.3rem;
+            color: #5d6d7e;
+            margin-bottom: 30px;
+        }
+        
+        .pass-fail {
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+        
+        .pass {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .fail {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .results-message {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: left;
+        }
+        
+        .submission-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 5px solid #27ae60;
+            display: none;
+        }
+        
+        /* Registration Form */
+        .registration-container {
+            text-align: center;
+            padding: 50px 40px;
+        }
+        
+        .registration-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .whatsapp-btn:hover {
+            background: #1da851;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .whatsapp-btn i {
+            font-size: 1.3rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .exam-body {
+                flex-direction: column;
+            }
+            
+            .question-nav {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .question-buttons {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .exam-header, .exam-info, .question-content {
+                padding: 20px;
+            }
+            
+            .exam-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .question-buttons {
+                grid-template-columns: repeat(5, 1fr);
+            }
+            
+            .tf-options {
+                flex-direction: column;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Registration Form -->
+    <div class="exam-container" id="registration-container">
+        <div class="exam-header">
+            <h1><i class="fas fa-user-plus"></i> Agent Registration</h1>
+            <h2>Please register before taking the qualification exam</h2>
+        </div>
+        
+        <div class="registration-container">
+            <div class="registration-card">
+                <div class="results-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h1 class="results-title">Agent Information</h1>
+                <p style="color: #6c757d; margin-bottom: 30px;">All fields are required for exam submission</p>
+                
+                <form id="registration-form">
+                    <div class="form-group">
+                        <label for="full-name">Full Name <span class="required">*</span></label>
+                        <input type="text" id="full-name" placeholder="Enter your full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number <span class="required">*</span></label>
+                        <input type="tel" id="phone" placeholder="e.g., +254790617211" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address <span class="required">*</span></label>
+                        <input type="email" id="email" placeholder="Enter your email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="location">Location/City <span class="required">*</span></label>
+                        <input type="text" id="location" placeholder="Where are you based?" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Previous Experience (Optional)</label>
+                        <input type="text" id="experience" placeholder="Any sales/marketing experience?">
+                    </div>
+                    
+                    <div class="form-group" style="margin-top: 30px;">
+                        <button type="button" class="whatsapp-btn" id="start-exam-btn">
+                            <i class="fas fa-play-circle"></i> Start Exam
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Exam Interface (Initially Hidden) -->
+    <div class="exam-container" id="exam-interface" style="display: none;">
+        <div class="exam-header">
+            <h1><i class="fas fa-graduation-cap"></i> Phillcode Agent Qualification Exam</h1>
+            <h2>Test your knowledge and field skills to become a certified Phillcode Agent</h2>
+        </div>
+        
+        <div class="exam-info">
+            <div class="info-item">
+                <i class="fas fa-question-circle"></i>
+                <span><strong>50 Questions</strong> (25 Field + 25 Knowledge)</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <span>Estimated time: <strong>60-75 minutes</strong></span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-star"></i>
+                <span>Passing score: <strong>70%</strong> (35+ correct)</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span><strong>Professional & Strict</strong> - Real-world focused</span>
+            </div>
+        </div>
+        
+        <div class="exam-body">
+            <div class="question-nav">
+                <h3>Exam Navigation</h3>
+                <div class="section-title">Field-Based Questions (1-25)</div>
+                <div class="question-buttons" id="field-buttons">
+                    <!-- Field question buttons will be generated here -->
+                </div>
+                
+                <div class="section-title">Knowledge-Based Questions (26-50)</div>
+                <div class="question-buttons" id="knowledge-buttons">
+                    <!-- Knowledge question buttons will be generated here -->
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Progress</span>
+                        <span id="progress-percent">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px; font-size: 0.9rem; color: #6c757d;">
+                    <p><i class="fas fa-info-circle"></i> <strong>Instructions:</strong></p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Answer all questions before submitting</li>
+                        <li>Points are shown for each question</li>
+                        <li>Green buttons indicate answered questions</li>
+                        <li>Your score calculates automatically</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="question-content" id="question-content">
+                <!-- Questions will be loaded here dynamically -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results-container" id="results-container">
+        <div class="results-card">
+            <div class="results-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h1 class="results-title">Exam Results</h1>
+            
+            <div class="score-display" id="final-score">0/70</div>
+            <div class="score-text" id="percentage-score">0%</div>
+            
+            <div class="pass-fail" id="pass-fail-indicator">Loading...</div>
+            
+            <div class="results-message">
+                <h3><i class="fas fa-clipboard-check"></i> Performance Summary</h3>
+                <p id="performance-summary">Your results are being calculated...</p>
+                
+                <div style="margin-top: 20px; display: flex; justify-content: space-around; flex-wrap: wrap;">
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="font-size: 2rem; color: #3498db; font-weight: 700;" id="field-score">0</div>
+                        <div style="color: #6c757d;">Field Questions</div>
+                    </div>
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="font-size: 2rem; color: #3498db; font-weight: 700;" id="knowledge-score">0</div>
+                        <div style="color: #6c757d;">Knowledge Questions</div>
+                    </div>
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="font-size: 2rem; color: #27ae60; font-weight: 700;" id="correct-count">0</div>
+                        <div style="color: #6c757d;">Correct Answers</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="submission-message" id="submission-message" style="display: none;">
+                <h3><i class="fas fa-check-circle"></i> WhatsApp Submission Ready</h3>
+                <p><strong>Click the WhatsApp button below to send your results directly to Phillcode</strong></p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">Your exam results will be sent to Phillcode for review. A coordinator will contact you within 3-5 business days.</p>
+            </div>
+            
+            <!-- WhatsApp Submission Button -->
+            <button class="whatsapp-btn" id="whatsapp-submit-btn" style="margin-top: 30px; display: none;">
+                <i class="fab fa-whatsapp"></i> Send Results via WhatsApp
+            </button>
+            
+            <button class="nav-btn submit-btn" id="retake-btn" style="margin-top: 20px; background: #6c757d;">
+                <i class="fas fa-redo"></i> Retake Exam
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ======================
+        // EXAM QUESTIONS DATA
+        // ======================
+        
+        const examQuestions = [
+            // FIELD-BASED QUESTIONS (1-25)
+            {
+                id: 1,
+                type: "field",
+                question: "You approach a salon owner during a busy period. She seems distracted and says 'I'm busy, maybe another time.' What is the BEST response?",
+                options: [
+                    "A) 'Okay, when would be a better time to talk?' and schedule a specific follow-up",
+                    "B) 'I understand, I'll come back tomorrow at the same time'",
+                    "C) 'This will only take 2 minutes, I promise'",
+                    "D) 'Just take my card and call me when you're free'"
+                ],
+                correct: 0,
+                points: 2,
+                explanation: "The correct approach respects the business owner's time while securing a specific future opportunity. This follows the Phillcode principle of being consultative, not pushy."
+            },
+            {
+                id: 2,
+                type: "field",
+                question: "When physically scouting for clients, which of these is NOT a reliable indicator that a business needs Phillcode services?",
+                options: [
+                    "A) No website URL on their signage",
+                    "B) Using personal Facebook for business",
+                    "C) A busy shop with many customers",
+                    "D) Prices written on a whiteboard or notebook"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "A busy shop with many customers indicates the business is already successful, not necessarily that they need online services. The other options are direct indicators of poor online presence."
+            },
+            {
+                id: 3,
+                type: "field",
+                question: "You enter a restaurant and want to speak to the owner. What is the BEST first thing to say?",
+                options: [
+                    "A) 'Hi, I'm from Phillcode and we build websites'",
+                    "B) 'Hello, I like your restaurant. Are you the owner or manager?'",
+                    "C) 'Do you need a website for your restaurant?'",
+                    "D) 'I can help you get more customers online'"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "Starting friendly and asking if they're the owner/manager is the recommended Phillcode approach. Never sell immediately; build rapport first."
+            },
+            {
+                id: 4,
+                type: "field",
+                question: "A business owner says 'We already have a website.' What is your BEST response?",
+                options: [
+                    "A) 'Can I see it? We might be able to improve it significantly.'",
+                    "B) 'That's great! Our services are probably not for you then.'",
+                    "C) 'Most business websites are outdated. Let me show you a modern demo.'",
+                    "D) 'Who built it? We're probably better than them.'"
+                ],
+                correct: 0,
+                points: 2,
+                explanation: "Asking to see their current website allows you to identify improvement opportunities. This follows the Phillcode objection handling approach of being consultative rather than argumentative."
+            },
+            {
+                id: 5,
+                type: "field",
+                question: "TRUE or FALSE: When approaching a business physically, you should dress casually to appear approachable and relatable.",
+                options: ["True", "False"],
+                correct: 1,
+                points: 1,
+                explanation: "FALSE. The Phillcode guide says to 'dress clean' and appear professional. First impressions matter, and professionalism builds credibility."
+            },
+            {
+                id: 6,
+                type: "field",
+                question: "A clinic owner says 'We don't have money for a website right now.' According to Phillcode objection handling, what should you say?",
+                options: [
+                    "A) 'How much CAN you afford?'",
+                    "B) 'That's why we start with a free demo — no pressure. When you see value, we discuss budget.'",
+                    "C) 'You're losing patients without a professional online presence.'",
+                    "D) 'We have payment plans available.'"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "The Phillcode script for 'we don't have money' is to offer a free demo with no pressure. This removes the financial objection and focuses on value demonstration."
+            },
+            {
+                id: 7,
+                type: "field",
+                question: "What are the THREE key pieces of information you MUST collect from a physical client for submission to Phillcode?",
+                shortAnswer: true,
+                correctKeywords: ["business name", "phone number", "services/products", "whatsapp", "email", "location"],
+                points: 3,
+                explanation: "The Client Information Form requires: Business Name, Services/Products, Phone Number, WhatsApp, Email, and Location. Collecting these ensures Phillcode can follow up properly."
+            },
+            {
+                id: 8,
+                type: "field",
+                question: "Describe step-by-step how you would approach a gym owner during a quiet period to pitch Phillcode services.",
+                longAnswer: true,
+                points: 5,
+                explanation: "A strong answer should include: 1) Enter confidently with a smile, 2) Start friendly: 'Hello, I like your gym. Are you the owner?', 3) Ask discovery questions about how clients find them, 4) Listen and identify their needs, 5) Present Phillcode as a solution for attracting more members, 6) Offer a free demo, 7) Collect contact information."
+            },
+            {
+                id: 9,
+                type: "field",
+                question: "You've been rejected by 3 businesses in a row. What should you do NEXT according to Phillcode mindset principles?",
+                options: [
+                    "A) Take a break and try again tomorrow",
+                    "B) Adjust your approach and try a different type of business",
+                    "C) Remember that rejection is part of the process and continue approaching businesses",
+                    "D) Review what went wrong and practice your pitch before continuing"
+                ],
+                correct: 2,
+                points: 2,
+                explanation: "The Phillcode mindset emphasizes persistence. Consistency beats talent. Rejection is normal; successful agents continue despite temporary setbacks."
+            },
+            {
+                id: 10,
+                type: "field",
+                question: "What is the '3-Follow-Up Rule' and why is it important?",
+                shortAnswer: true,
+                correctKeywords: ["initial contact", "share demo", "check interest", "final offer", "80% sales", "5th contact"],
+                points: 3,
+                explanation: "The 3-Follow-Up Rule: 1) Initial contact, 2) Share demo (1 day later), 3) Check interest (3 days later), 4) Final offer (7 days later). It's important because 80% of sales happen after the 5th contact, and most agents give up too early."
+            },
+            {
+                id: 11,
+                type: "field",
+                question: "TRUE or FALSE: When a client says 'I'll think about it,' you should pressure them to decide immediately.",
+                options: ["True", "False"],
+                correct: 1,
+                points: 1,
+                explanation: "FALSE. The correct Phillcode response is 'No problem. I'll send you the demo and follow up in two days.' Pressuring clients violates the consultative approach."
+            },
+            {
+                id: 12,
+                type: "field",
+                question: "You notice a hardware shop with old, faded posters and no website on their signage. What should you do FIRST?",
+                options: [
+                    "A) Immediately explain how Phillcode can help them look more professional",
+                    "B) Enter and ask to speak with the owner or manager",
+                    "C) Take photos of their poor signage to show them later",
+                    "D) Check if they have social media before approaching"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "The first step is always to enter and ask for the owner/manager. Observation identifies potential clients, but conversation starts the relationship."
+            },
+            {
+                id: 13,
+                type: "field",
+                question: "A real estate agent likes your demo but wants to negotiate the price directly with you. What should you do?",
+                options: [
+                    "A) Negotiate the best price you can to secure the client",
+                    "B) Explain that Phillcode handles all pricing professionally",
+                    "C) Give them a discount to get the sale",
+                    "D) Tell them the price is non-negotiable"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "Agents should NEVER negotiate pricing. Your job is to connect clients to Phillcode, who will handle all pricing discussions professionally."
+            },
+            {
+                id: 14,
+                type: "field",
+                question: "What is the DAILY minimum activity target for physical client acquisition according to the Phillcode routine?",
+                options: [
+                    "A) Talk to 3 businesses",
+                    "B) Talk to 5 businesses",
+                    "C) Talk to 10 businesses",
+                    "D) Submit 5 leads"
+                ],
+                correct: 1,
+                points: 1,
+                explanation: "The daily routine requires talking to 5 businesses physically OR sending 20 DMs online. Consistency with this minimum creates success."
+            },
+            {
+                id: 15,
+                type: "field",
+                question: "Describe how you would use the 'Google Maps Method' to find potential clients online.",
+                longAnswer: true,
+                points: 4,
+                explanation: "A strong answer should include: 1) Search for business types in your area (e.g., 'salon near me'), 2) Click on businesses to check their profiles, 3) Look for missing or poor websites, 4) Check for bad photos or outdated info, 5) Note businesses with no social media links, 6) Contact qualified prospects via available channels."
+            },
+            {
+                id: 16,
+                type: "field",
+                question: "When is it appropriate to discuss technical details of website development with a client?",
+                options: [
+                    "A) Always - you need to show your expertise",
+                    "B) Only if they specifically ask technical questions",
+                    "C) Never - technical details are handled by Phillcode",
+                    "D) Only during the demo presentation"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "Agents should NEVER discuss technical details. Your role is problem-finding and connection, not technical execution. Phillcode's team handles all technical aspects."
+            },
+            {
+                id: 17,
+                type: "field",
+                question: "What is the key mindset shift that Phillcode emphasizes for successful agents?",
+                options: [
+                    "A) From salesperson to consultant",
+                    "B) From beggar to opportunity connector",
+                    "C) From employee to entrepreneur",
+                    "D) All of the above"
+                ],
+                correct: 3,
+                points: 1,
+                explanation: "Phillcode emphasizes all these mindset shifts: You are not begging but offering opportunities; not just selling but consulting; and taking entrepreneurial responsibility for your success."
+            },
+            {
+                id: 18,
+                type: "field",
+                question: "TRUE or FALSE: The best clients are startups that are 'planning to start soon.'",
+                options: ["True", "False"],
+                correct: 1,
+                points: 1,
+                explanation: "FALSE. Phillcode explicitly says to AVOID broke startups or people 'planning to start soon.' Target established businesses that already make money."
+            },
+            {
+                id: 19,
+                type: "field",
+                question: "A business owner is interested but wants to know exact pricing immediately. What should you do?",
+                options: [
+                    "A) Give them the standard Phillcode pricing",
+                    "B) Connect them with Phillcode for professional pricing discussion",
+                    "C) Estimate based on similar clients",
+                    "D) Ask about their budget first"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "Agents should not discuss pricing. The correct action is to connect them with Phillcode's team who will provide exact pricing based on their specific needs."
+            },
+            {
+                id: 20,
+                type: "field",
+                question: "What is the WEEKLY target for qualified leads to submit to Phillcode?",
+                options: [
+                    "A) 3 leads",
+                    "B) 5 leads",
+                    "C) 10 leads",
+                    "D) 20 leads"
+                ],
+                correct: 1,
+                points: 1,
+                explanation: "The weekly target is 5 qualified leads. Quality is more important than quantity - 5 good leads are better than 20 bad ones."
+            },
+            {
+                id: 21,
+                type: "field",
+                question: "How should you handle a client who says their nephew is building their website for free?",
+                options: [
+                    "A) Explain why professional services are better than amateur work",
+                    "B) Offer to show them a comparison demo at no obligation",
+                    "C) Wish them luck and move to the next prospect",
+                    "D) Ask if their nephew is a trained professional"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "The Phillcode objection handling for 'we already have someone' is to offer a comparison demo with no obligation. This showcases value without confrontation."
+            },
+            {
+                id: 22,
+                type: "field",
+                question: "What are the three skills that Phillcode says will always make you money if mastered?",
+                shortAnswer: true,
+                correctKeywords: ["observation", "conversation", "follow-up"],
+                points: 3,
+                explanation: "The three master skills are: 1) OBSERVATION - seeing business problems others miss, 2) CONVERSATION - asking right questions and presenting solutions, 3) FOLLOW-UP - persistence without being annoying."
+            },
+            {
+                id: 23,
+                type: "field",
+                question: "Describe a complete physical approach to a pharmacy that has no website URL on its signage.",
+                longAnswer: true,
+                points: 5,
+                explanation: "A strong answer should include: 1) Enter during less busy hours, 2) Dress professionally and smile, 3) Ask for owner/manager, 4) Start with compliment about their business, 5) Ask discovery questions about patient acquisition, 6) Listen for pain points, 7) Present Phillcode as solution for credibility and appointments, 8) Offer free demo, 9) Collect contact info, 10) Follow up systematically."
+            },
+            {
+                id: 24,
+                type: "field",
+                question: "TRUE or FALSE: You should target businesses that are empty during business hours because they desperately need help.",
+                options: ["True", "False"],
+                correct: 0,
+                points: 1,
+                explanation: "TRUE. An empty shop during business hours is one of the indicators mentioned in the Phillcode guide for spotting potential clients physically."
+            },
+            {
+                id: 25,
+                type: "field",
+                question: "What is the MONTHLY client closing goal for a Phillcode agent?",
+                options: [
+                    "A) 1-2 clients",
+                    "B) 3-5 clients",
+                    "C) 5-10 clients",
+                    "D) 10+ clients"
+                ],
+                correct: 1,
+                points: 1,
+                explanation: "The realistic monthly goal is 3-5 clients. At KSh 50,000 per project with 30% commission, 3 clients = KSh 45,000 monthly commission."
+            },
+            
+            // KNOWLEDGE-BASED QUESTIONS (26-50)
+            {
+                id: 26,
+                type: "knowledge",
+                question: "What is the Phillcode agent commission percentage?",
+                options: [
+                    "A) 20%",
+                    "B) 25%",
+                    "C) 30%",
+                    "D) 35%"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "Phillcode agents earn 30% commission on project value. This is clearly stated in the guide."
+            },
+            {
+                id: 27,
+                type: "knowledge",
+                question: "TRUE or FALSE: Phillcode agents need web development skills to succeed.",
+                options: ["True", "False"],
+                correct: 1,
+                points: 1,
+                explanation: "FALSE. The guide states 'No technical skills required.' Agents are problem-finders and opportunity connectors, not developers."
+            },
+            {
+                id: 28,
+                type: "knowledge",
+                question: "Which of these is NOT a core service offered by Phillcode?",
+                options: [
+                    "A) Website design & development",
+                    "B) Social media management",
+                    "C) Physical store renovation",
+                    "D) SEO & online visibility"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "Physical store renovation is NOT a Phillcode service. Core services are digital: websites, branding, social media, lead generation, and SEO."
+            },
+            {
+                id: 29,
+                type: "knowledge",
+                question: "What should you NEVER do as a Phillcode agent when handling client objections?",
+                options: [
+                    "A) Listen carefully to their concerns",
+                    "B) Argue with the client",
+                    "C) Offer a free demo",
+                    "D) Schedule follow-up contact"
+                ],
+                correct: 1,
+                points: 1,
+                explanation: "Agents should NEVER argue with clients ('You're wrong to think that!'). This violates the consultative, professional approach."
+            },
+            {
+                id: 30,
+                type: "knowledge",
+                question: "List at least four types of businesses that have high conversion rates for Phillcode services.",
+                shortAnswer: true,
+                correctKeywords: ["salons", "barbers", "clinics", "pharmacies", "restaurants", "real estate", "gyms", "fitness", "schools", "colleges"],
+                points: 2,
+                explanation: "High-conversion businesses include: Salons & Barbers, Clinics & Pharmacies, Restaurants, Real Estate Agents, Gyms & Fitness centers, Schools & Colleges."
+            },
+            {
+                id: 31,
+                type: "knowledge",
+                question: "What is the key difference between what clients THINK they're buying and what they're REALLY buying from Phillcode?",
+                longAnswer: true,
+                points: 3,
+                explanation: "Clients think they're buying a website, logo, or social media posts. They're REALLY buying: more customers, professional image, trust & credibility, and sales growth. Agents must sell RESULTS, not just services."
+            },
+            {
+                id: 32,
+                type: "knowledge",
+                question: "What is the correct Phillcode pitch script after asking discovery questions?",
+                options: [
+                    "A) 'We build the best websites in Kenya at affordable prices.'",
+                    "B) 'We work with businesses like yours at Phillcode to help attract customers online and look more professional.'",
+                    "C) 'You need a website to compete in today's market. Can I show you our packages?'",
+                    "D) 'I can build you a website starting at KSh 20,000.'"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "The exact Phillcode script is: 'We work with businesses like yours at Phillcode. We help them attract customers online and look more professional — which builds trust and increases sales.'"
+            },
+            {
+                id: 33,
+                type: "knowledge",
+                question: "TRUE or FALSE: Phillcode agents should take payment directly from clients.",
+                options: ["True", "False"],
+                correct: 1,
+                points: 1,
+                explanation: "FALSE. Agents should NEVER take payment. Their job is to connect clients to Phillcode, who handles all payments professionally."
+            },
+            {
+                id: 34,
+                type: "knowledge",
+                question: "What does the 'Consistency Formula' predict from 5 conversations per day?",
+                options: [
+                    "A) 5 clients per month",
+                    "B) 3 clients per month",
+                    "C) 10 clients per month",
+                    "D) 1 client per month"
+                ],
+                correct: 1,
+                points: 1,
+                explanation: "The Consistency Formula: 5 conversations/day × 20 days = 100 conversations → 20 interested → 5 demos → 3 clients per month."
+            },
+            {
+                id: 35,
+                type: "knowledge",
+                question: "What information should be included in the Client Information Form for submission to Phillcode?",
+                shortAnswer: true,
+                correctKeywords: ["business name", "services/products", "phone", "whatsapp", "email", "location", "goals", "current online status"],
+                points: 3,
+                explanation: "The form requires: Business Name, Services/Products, Phone, WhatsApp, Email, Location, Goals (more calls/bookings/sales), and Current Online Status (no/bad website, no/poor social media)."
+            },
+            {
+                id: 36,
+                type: "knowledge",
+                question: "What is the correct Instagram DM approach according to Phillcode?",
+                options: [
+                    "A) 'Hi, I can grow your Instagram followers by 1000 in one week.'",
+                    "B) 'Hi 👋 I came across your page and love what you do. I noticed your online presence can attract more customers with better branding.'",
+                    "C) 'Your social media needs work. We can fix it for you.'",
+                    "D) 'Want more customers? Contact me for social media services.'"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "The exact Phillcode Instagram DM script starts with a compliment: 'Hi 👋 I came across your page and love what you do. I noticed your online presence can attract more customers with better branding.'"
+            },
+            {
+                id: 37,
+                type: "knowledge",
+                question: "What are the FOUR steps in the Phillcode closing script when a client is interested?",
+                longAnswer: true,
+                points: 4,
+                explanation: "When closing: 1) Express gladness for their interest, 2) Explain Phillcode team handles pricing/onboarding, 3) List what project manager will do: discuss needs, provide pricing, create timeline, handle technical aspects, 4) Ask for good time to connect them."
+            },
+            {
+                id: 38,
+                type: "knowledge",
+                question: "TRUE or FALSE: The ideal Phillcode client is any business that exists.",
+                options: ["True", "False"],
+                correct: 1,
+                points: 1,
+                explanation: "FALSE. Ideal clients are ESTABLISHED businesses that already make money, need more customers, and have poor online presence. Avoid broke startups."
+            },
+            {
+                id: 39,
+                type: "knowledge",
+                question: "What should you do when joining Facebook groups for client acquisition?",
+                options: [
+                    "A) Immediately post about Phillcode services",
+                    "B) Spam your offer to every member",
+                    "C) Comment value first before DMing interested people",
+                    "D) Only join groups with thousands of members"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "In Facebook groups, don't spam. Comment value first (e.g., 'Branding is what makes customers trust you before buying'), then DM interested people."
+            },
+            {
+                id: 40,
+                type: "knowledge",
+                question: "How many follow-ups does it typically take to make a sale according to Phillcode statistics?",
+                options: [
+                    "A) 1-2 follow-ups",
+                    "B) 3-4 follow-ups",
+                    "C) 5+ follow-ups",
+                    "D) 7+ follow-ups"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "80% of sales happen after the 5th contact. Most agents give up after 2, but persistence (without being annoying) is key."
+            },
+            {
+                id: 41,
+                type: "knowledge",
+                question: "What is the primary role of a Phillcode agent?",
+                options: [
+                    "A) Web developer",
+                    "B) Problem finder + opportunity connector",
+                    "C) Sales manager",
+                    "D) Social media influencer"
+                ],
+                correct: 1,
+                points: 1,
+                explanation: "Agents are 'PROBLEM FINDER + OPPORTUNITY CONNECTOR' - not developers, designers, or traditional salespeople."
+            },
+            {
+                id: 42,
+                type: "knowledge",
+                question: "What are the THREE mindsets that make a successful Phillcode agent?",
+                shortAnswer: true,
+                correctKeywords: ["calm", "confident", "helpful", "consultative", "professional", "solution-oriented", "patient"],
+                points: 2,
+                explanation: "Successful agents are: Calm & confident, Helpful & consultative, Professional, Solution-oriented, Patient (any three of these)."
+            },
+            {
+                id: 43,
+                type: "knowledge",
+                question: "TRUE or FALSE: Phillcode provides lead generation systems as one of its services.",
+                options: ["True", "False"],
+                correct: 0,
+                points: 1,
+                explanation: "TRUE. Lead generation systems are one of the five core services offered by Phillcode (along with websites, branding, social media, and SEO)."
+            },
+            {
+                id: 44,
+                type: "knowledge",
+                question: "What is the correct response when a client says 'Send me your portfolio'?",
+                options: [
+                    "A) Send them links to 10 different websites",
+                    "B) Offer to create a free custom demo for their specific business",
+                    "C) Direct them to the Phillcode website",
+                    "D) Explain that portfolios don't show what's possible for THEIR business"
+                ],
+                correct: 1,
+                points: 2,
+                explanation: "The Phillcode approach is to offer a FREE DEMO specific to their business. This is more effective than showing generic portfolios."
+            },
+            {
+                id: 45,
+                type: "knowledge",
+                question: "What are the daily online acquisition targets as an alternative to physical approaches?",
+                options: [
+                    "A) Send 5 DMs",
+                    "B) Send 10 DMs",
+                    "C) Send 15 DMs",
+                    "D) Send 20 DMs"
+                ],
+                correct: 3,
+                points: 1,
+                explanation: "The daily routine is: Talk to 5 businesses physically OR send 20 DMs online. Both achieve the same minimum activity target."
+            },
+            {
+                id: 46,
+                type: "knowledge",
+                question: "Describe what happens after you submit a qualified lead to Phillcode.",
+                longAnswer: true,
+                points: 3,
+                explanation: "After lead submission: 1) Phillcode's team contacts the client professionally, 2) They discuss specific needs and goals, 3) Provide exact pricing based on requirements, 4) Create project timeline, 5) Handle all technical execution, 6) You earn 30% commission when project is secured."
+            },
+            {
+                id: 47,
+                type: "knowledge",
+                question: "TRUE or FALSE: You should target businesses that look professional and successful online.",
+                options: ["True", "False"],
+                correct: 1,
+                points: 1,
+                explanation: "FALSE. Target businesses with POOR online presence or none at all. Successful online businesses don't need Phillcode services as urgently."
+            },
+            {
+                id: 48,
+                type: "knowledge",
+                question: "What percentage of potential earnings can a Phillcode agent make per month according to the guide's example?",
+                options: [
+                    "A) KSh 15,000",
+                    "B) KSh 30,000",
+                    "C) KSh 45,000",
+                    "D) KSh 60,000"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "The example shows: 3 clients at KSh 50,000 each = KSh 150,000 project value × 30% = KSh 45,000 monthly commission."
+            },
+            {
+                id: 49,
+                type: "knowledge",
+                question: "What is the 'key insight' about who can become a successful Phillcode agent?",
+                options: [
+                    "A) Only people with sales experience",
+                    "B) Only people with tech background",
+                    "C) Anyone who can talk and observe",
+                    "D) Only university graduates"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "The key insight: 'If you can talk and observe, you can do this job. No technical skills required.'"
+            },
+            {
+                id: 50,
+                type: "knowledge",
+                question: "What is the final step after a client agrees to work with Phillcode?",
+                options: [
+                    "A) Collect deposit payment",
+                    "B) Start designing their website",
+                    "C) Send thank you message and forward details to Phillcode",
+                    "D) Ask for referrals immediately"
+                ],
+                correct: 2,
+                points: 1,
+                explanation: "After getting commitment: Send thank you message, forward all details to Phillcode, and let their team handle onboarding. Agents don't handle payments or execution."
+            }
+        ];
+        
+        // ======================
+        // GLOBAL STATE
+        // ======================
+        
+        let currentQuestion = 0;
+        let userAnswers = new Array(examQuestions.length).fill(null);
+        let examScore = 0;
+        let answeredCount = 0;
+        let userDetails = {
+            fullName: '',
+            phone: '',
+            email: '',
+            location: '',
+            experience: '',
+            submissionTime: ''
+        };
+        
+        // ======================
+        // DOM ELEMENTS
+        // ======================
+        
+        const registrationContainer = document.getElementById('registration-container');
+        const examInterface = document.getElementById('exam-interface');
+        const questionContent = document.getElementById('question-content');
+        const fieldButtons = document.getElementById('field-buttons');
+        const knowledgeButtons = document.getElementById('knowledge-buttons');
+        const progressFill = document.getElementById('progress-fill');
+        const progressPercent = document.getElementById('progress-percent');
+        const resultsContainer = document.getElementById('results-container');
+        const finalScore = document.getElementById('final-score');
+        const percentageScore = document.getElementById('percentage-score');
+        const passFailIndicator = document.getElementById('pass-fail-indicator');
+        const performanceSummary = document.getElementById('performance-summary');
+        const fieldScore = document.getElementById('field-score');
+        const knowledgeScore = document.getElementById('knowledge-score');
+        const correctCount = document.getElementById('correct-count');
+        const submissionMessage = document.getElementById('submission-message');
+        const whatsappSubmitBtn = document.getElementById('whatsapp-submit-btn');
+        const startExamBtn = document.getElementById('start-exam-btn');
+        
+        // ======================
+        // REGISTRATION HANDLING
+        // ======================
+        
+        startExamBtn.addEventListener('click', function() {
+            // Collect user details
+            userDetails.fullName = document.getElementById('full-name').value.trim();
+            userDetails.phone = document.getElementById('phone').value.trim();
+            userDetails.email = document.getElementById('email').value.trim();
+            userDetails.location = document.getElementById('location').value.trim();
+            userDetails.experience = document.getElementById('experience').value.trim();
+            
+            // Validate required fields
+            if (!userDetails.fullName || !userDetails.phone || !userDetails.email || !userDetails.location) {
+                alert('Please fill in all required fields (marked with *)');
+                return;
+            }
+            
+            // Validate phone number format
+            if (!userDetails.phone.match(/^\+?[\d\s\-\(\)]+$/)) {
+                alert('Please enter a valid phone number');
+                return;
+            }
+            
+            // Validate email format
+            if (!userDetails.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Hide registration, show exam
+            registrationContainer.style.display = 'none';
+            examInterface.style.display = 'block';
+            
+            // Initialize exam
+            initExam();
+        });
+        
+        // ======================
+        // EXAM INITIALIZATION
+        // ======================
+        
+        function initExam() {
+            createQuestionButtons();
+            loadQuestion(currentQuestion);
+            updateProgress();
+        }
+        
+        function createQuestionButtons() {
+            fieldButtons.innerHTML = '';
+            knowledgeButtons.innerHTML = '';
+            
+            // Create field question buttons (1-25)
+            for (let i = 0; i < 25; i++) {
+                const button = document.createElement('button');
+                button.className = 'q-btn';
+                button.id = `q-btn-${i}`;
+                button.textContent = i + 1;
+                button.addEventListener('click', () => {
+                    currentQuestion = i;
+                    loadQuestion(currentQuestion);
+                });
+                fieldButtons.appendChild(button);
+            }
+            
+            // Create knowledge question buttons (26-50)
+            for (let i = 25; i < 50; i++) {
+                const button = document.createElement('button');
+                button.className = 'q-btn';
+                button.id = `q-btn-${i}`;
+                button.textContent = i + 1;
+                button.addEventListener('click', () => {
+                    currentQuestion = i;
+                    loadQuestion(currentQuestion);
+                });
+                knowledgeButtons.appendChild(button);
+            }
+        }
+        
+        function loadQuestion(index) {
+            // Clear previous question
+            questionContent.innerHTML = '';
+            
+            // Update active button
+            document.querySelectorAll('.q-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(`q-btn-${index}`).classList.add('active');
+            
+            const question = examQuestions[index];
+            
+            // Create question card
+            const card = document.createElement('div');
+            card.className = 'question-card active';
+            card.id = `question-${index}`;
+            
+            // Question header
+            const header = document.createElement('div');
+            header.className = 'question-header';
+            
+            const number = document.createElement('div');
+            number.className = 'question-number';
+            number.innerHTML = `Question ${index + 1} <span style="color: #7f8c8d; font-weight: normal;">/ 50</span>`;
+            
+            const type = document.createElement('div');
+            type.className = 'question-type';
+            type.textContent = question.type.toUpperCase();
+            
+            header.appendChild(number);
+            header.appendChild(type);
+            
+            // Question text
+            const text = document.createElement('div');
+            text.className = 'question-text';
+            text.textContent = question.question;
+            
+            // Points indicator
+            const points = document.createElement('div');
+            points.className = 'question-points';
+            points.textContent = `Points: ${question.points}`;
+            
+            card.appendChild(header);
+            card.appendChild(text);
+            card.appendChild(points);
+            
+            // Render question type
+            if (question.options) {
+                if (question.options.length === 2 && (question.options[0] === 'True' || question.options[0] === 'False')) {
+                    // True/False question
+                    renderTrueFalse(card, question, index);
+                } else {
+                    // Multiple choice question
+                    renderMultipleChoice(card, question, index);
+                }
+            } else if (question.shortAnswer) {
+                // Short answer question
+                renderShortAnswer(card, question, index);
+            } else if (question.longAnswer) {
+                // Long answer question
+                renderLongAnswer(card, question, index);
+            }
+            
+            // Navigation buttons
+            const navButtons = document.createElement('div');
+            navButtons.className = 'nav-buttons';
+            
+            // Previous button (not for first question)
+            if (index > 0) {
+                const prevBtn = document.createElement('button');
+                prevBtn.className = 'nav-btn prev-btn';
+                prevBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Previous';
+                prevBtn.addEventListener('click', () => {
+                    currentQuestion--;
+                    loadQuestion(currentQuestion);
+                });
+                navButtons.appendChild(prevBtn);
+            } else {
+                // Empty div for spacing
+                const emptyDiv = document.createElement('div');
+                navButtons.appendChild(emptyDiv);
+            }
+            
+            // Next/Submit button
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'nav-btn next-btn';
+            
+            if (index < examQuestions.length - 1) {
+                nextBtn.innerHTML = 'Next <i class="fas fa-arrow-right"></i>';
+                nextBtn.addEventListener('click', () => {
+                    currentQuestion++;
+                    loadQuestion(currentQuestion);
+                });
+            } else {
+                nextBtn.className = 'nav-btn submit-btn';
+                nextBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Exam';
+                nextBtn.addEventListener('click', submitExam);
+            }
+            
+            navButtons.appendChild(nextBtn);
+            card.appendChild(navButtons);
+            
+            questionContent.appendChild(card);
+            
+            // If user already answered this question, show their answer
+            if (userAnswers[index] !== null) {
+                setTimeout(() => {
+                    if (question.options) {
+                        if (question.options.length === 2) {
+                            // True/False
+                            const tfButtons = card.querySelectorAll('.tf-btn');
+                            tfButtons[userAnswers[index]].classList.add('selected');
+                        } else {
+                            // Multiple choice
+                            const options = card.querySelectorAll('.option');
+                            options[userAnswers[index]].classList.add('selected');
+                        }
+                    } else if (question.shortAnswer || question.longAnswer) {
+                        const textArea = card.querySelector('textarea');
+                        textArea.value = userAnswers[index];
+                    }
+                }, 100);
+            }
+        }
+        
+        function renderMultipleChoice(card, question, index) {
+            const container = document.createElement('div');
+            container.className = 'options-container';
+            
+            question.options.forEach((option, optIndex) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                
+                // Create radio input
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `question-${index}`;
+                radio.id = `question-${index}-option-${optIndex}`;
+                radio.value = optIndex;
+                
+                // Create label
+                const label = document.createElement('label');
+                label.htmlFor = `question-${index}-option-${optIndex}`;
+                label.textContent = option;
+                label.style.cursor = 'pointer';
+                label.style.marginLeft = '10px';
+                label.style.flex = '1';
+                
+                optionDiv.appendChild(radio);
+                optionDiv.appendChild(label);
+                
+                optionDiv.addEventListener('click', () => {
+                    // Remove selection from other options
+                    container.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // Select this option
+                    optionDiv.classList.add('selected');
+                    radio.checked = true;
+                    
+                    // Save answer
+                    userAnswers[index] = optIndex;
+                    updateQuestionButton(index, true);
+                    updateProgress();
+                });
+                
+                container.appendChild(optionDiv);
+            });
+            
+            card.appendChild(container);
+        }
+        
+        function renderTrueFalse(card, question, index) {
+            const container = document.createElement('div');
+            container.className = 'tf-options';
+            
+            question.options.forEach((option, optIndex) => {
+                const button = document.createElement('div');
+                button.className = 'tf-btn';
+                button.textContent = option;
+                
+                button.addEventListener('click', () => {
+                    // Remove selection from other button
+                    container.querySelectorAll('.tf-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                    
+                    // Select this button
+                    button.classList.add('selected');
+                    
+                    // Save answer
+                    userAnswers[index] = optIndex;
+                    updateQuestionButton(index, true);
+                    updateProgress();
+                });
+                
+                container.appendChild(button);
+            });
+            
+            card.appendChild(container);
+        }
+        
+        function renderShortAnswer(card, question, index) {
+            const textarea = document.createElement('textarea');
+            textarea.className = 'text-input short-input';
+            textarea.placeholder = 'Type your answer here...';
+            
+            textarea.addEventListener('input', () => {
+                userAnswers[index] = textarea.value.trim();
+                updateQuestionButton(index, userAnswers[index].length > 0);
+                updateProgress();
+            });
+            
+            card.appendChild(textarea);
+        }
+        
+        function renderLongAnswer(card, question, index) {
+            const textarea = document.createElement('textarea');
+            textarea.className = 'text-input';
+            textarea.placeholder = 'Provide a detailed response. Aim for at least 3-5 sentences...';
+            
+            textarea.addEventListener('input', () => {
+                userAnswers[index] = textarea.value.trim();
+                updateQuestionButton(index, userAnswers[index].length > 0);
+                updateProgress();
+            });
+            
+            card.appendChild(textarea);
+        }
+        
+        function updateQuestionButton(index, answered) {
+            const button = document.getElementById(`q-btn-${index}`);
+            
+            if (answered) {
+                button.classList.add('answered');
+                if (!button.classList.contains('active')) {
+                    button.classList.remove('active');
+                }
+            } else {
+                button.classList.remove('answered');
+            }
+        }
+        
+        function updateProgress() {
+            // Count answered questions
+            answeredCount = userAnswers.filter(answer => answer !== null && answer !== '').length;
+            
+            // Update progress bar
+            const percent = (answeredCount / examQuestions.length) * 100;
+            progressFill.style.width = `${percent}%`;
+            progressPercent.textContent = `${Math.round(percent)}%`;
+        }
+        
+        // ======================
+        // EXAM SUBMISSION & SCORING
+        // ======================
+        
+        function submitExam() {
+            // Calculate score
+            calculateScore();
+            
+            // Show results
+            showResults();
+            
+            // Set submission time
+            userDetails.submissionTime = new Date().toLocaleString();
+            
+            // Show WhatsApp submission button
+            setTimeout(() => {
+                submissionMessage.style.display = 'block';
+                whatsappSubmitBtn.style.display = 'flex';
+                
+                // Setup WhatsApp submission
+                setupWhatsAppSubmission();
+            }, 1000);
+        }
+        
+        function calculateScore() {
+            examScore = 0;
+            let fieldQuestionsScore = 0;
+            let knowledgeQuestionsScore = 0;
+            let correctAnswersCount = 0;
+            
+            examQuestions.forEach((question, index) => {
+                const userAnswer = userAnswers[index];
+                
+                if (userAnswer !== null && userAnswer !== '') {
+                    if (question.options) {
+                        // Multiple choice or True/False
+                        if (userAnswer === question.correct) {
+                            examScore += question.points;
+                            correctAnswersCount++;
+                            
+                            if (question.type === 'field') {
+                                fieldQuestionsScore += question.points;
+                            } else {
+                                knowledgeQuestionsScore += question.points;
+                            }
+                        }
+                    } else if (question.shortAnswer || question.longAnswer) {
+                        // Text answers - simplified scoring
+                        let answerPoints = 0;
+                        
+                        if (userAnswer.length > 10) {
+                            // Check for keywords in short answers
+                            if (question.shortAnswer && question.correctKeywords) {
+                                const keywordsFound = question.correctKeywords.filter(keyword => 
+                                    userAnswer.toLowerCase().includes(keyword.toLowerCase())
+                                ).length;
+                                
+                                // Give points based on percentage of keywords found
+                                const keywordPercentage = keywordsFound / question.correctKeywords.length;
+                                answerPoints = Math.floor(question.points * keywordPercentage);
+                            } else if (question.longAnswer) {
+                                // For long answers, give points based on length and structure
+                                const wordCount = userAnswer.split(/\s+/).length;
+                                if (wordCount >= 30) {
+                                    answerPoints = Math.floor(question.points * 0.8); // 80% for good effort
+                                } else if (wordCount >= 15) {
+                                    answerPoints = Math.floor(question.points * 0.5); // 50% for minimal effort
+                                }
+                            }
+                            
+                            examScore += answerPoints;
+                            correctAnswersCount += (answerPoints > 0 ? 0.5 : 0); // Partial count for text answers
+                            
+                            if (question.type === 'field') {
+                                fieldQuestionsScore += answerPoints;
+                            } else {
+                                knowledgeQuestionsScore += answerPoints;
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Update score displays
+            const percentage = Math.round((examScore / 70) * 100); // Total possible points = 70
+            
+            finalScore.textContent = `${examScore}/70`;
+            percentageScore.textContent = `${percentage}%`;
+            fieldScore.textContent = `${fieldQuestionsScore}`;
+            knowledgeScore.textContent = `${knowledgeQuestionsScore}`;
+            correctCount.textContent = `${Math.round(correctAnswersCount)}/50`;
+            
+            // Determine pass/fail
+            const passingScore = 70; // 70% of 70 points = 49 points
+            if (percentage >= 70) {
+                passFailIndicator.textContent = "PASS - Qualifying Agent";
+                passFailIndicator.className = "pass-fail pass";
+                performanceSummary.textContent = `Congratulations! You have demonstrated strong knowledge of Phillcode systems and field application skills. Your performance indicates you're ready to represent Phillcode professionally.`;
+            } else {
+                passFailIndicator.textContent = "FAIL - Needs More Training";
+                passFailIndicator.className = "pass-fail fail";
+                performanceSummary.textContent = `You need more study and practice before representing Phillcode. Review the Agent Master Guide thoroughly, particularly in areas where you scored lower. Consider retaking this exam after further preparation.`;
+            }
+        }
+        
+        function showResults() {
+            // Hide exam, show results
+            examInterface.style.display = 'none';
+            resultsContainer.style.display = 'block';
+        }
+        
+        // ======================
+        // WHATSAPP SUBMISSION
+        // ======================
+        
+        function setupWhatsAppSubmission() {
+            whatsappSubmitBtn.addEventListener('click', sendToWhatsApp);
+        }
+        
+        function sendToWhatsApp() {
+            // Prepare the message content
+            const message = `🚀 *NEW PHILLCODE EXAM SUBMISSION* 🚀
+
+*👤 Candidate Information:*
+• *Name:* ${userDetails.fullName}
+• *Phone:* ${userDetails.phone}
+• *Email:* ${userDetails.email}
+• *Location:* ${userDetails.location}
+• *Experience:* ${userDetails.experience || 'None specified'}
+• *Submission Time:* ${userDetails.submissionTime}
+
+*📊 Exam Results:*
+• *Total Score:* ${examScore}/70 points
+• *Percentage:* ${Math.round((examScore / 70) * 100)}%
+• *Field Questions:* ${document.getElementById('field-score').textContent} points
+• *Knowledge Questions:* ${document.getElementById('knowledge-score').textContent} points
+• *Correct Answers:* ${document.getElementById('correct-count').textContent}/50
+• *Status:* ${examScore >= 49 ? '✅ PASS' : '❌ FAIL'}
+
+*📈 Performance Summary:*
+${document.getElementById('performance-summary').textContent}
+
+*🔍 Additional Details:*
+- Answered Questions: ${answeredCount}/50
+- Submission completed via online portal
+- Results generated automatically
+
+*📋 Next Steps:*
+1. Review candidate performance
+2. Contact candidate for interview
+3. Process certification if qualified
+4. Provide feedback if needed
+
+---
+*This submission was automatically generated from the Phillcode Agent Qualification Exam Portal*`;
+
+            // Encode the message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Your WhatsApp number (with country code, no spaces or special characters)
+            const whatsappNumber = "254790617211";
+            
+            // Create WhatsApp URL
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            
+            // Open WhatsApp in new tab
+            window.open(whatsappURL, '_blank');
+            
+            // Update submission message
+            submissionMessage.innerHTML = `
+                <h3><i class="fas fa-check-circle"></i> WhatsApp Opened!</h3>
+                <p><strong>Your results have been prepared for WhatsApp.</strong></p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">
+                    <strong>Next steps:</strong><br>
+                    1. WhatsApp should open in a new tab<br>
+                    2. Review the pre-filled message<br>
+                    3. Click send to submit to Phillcode<br>
+                    4. Keep this page open for your records
+                </p>
+            `;
+            
+            // Change button text
+            whatsappSubmitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Open WhatsApp Again';
+        }
+        
+        // ======================
+        // RETAKE EXAM FUNCTIONALITY
+        // ======================
+        
+        document.getElementById('retake-btn').addEventListener('click', function() {
+            // Reset exam state
+            currentQuestion = 0;
+            userAnswers = new Array(examQuestions.length).fill(null);
+            examScore = 0;
+            answeredCount = 0;
+            
+            // Reset UI
+            document.querySelectorAll('.q-btn').forEach(btn => {
+                btn.classList.remove('answered');
+            });
+            
+            // Show registration, hide results
+            resultsContainer.style.display = 'none';
+            registrationContainer.style.display = 'block';
+            
+            // Reset form
+            document.getElementById('full-name').value = userDetails.fullName;
+            document.getElementById('phone').value = userDetails.phone;
+            document.getElementById('email').value = userDetails.email;
+            document.getElementById('location').value = userDetails.location;
+            document.getElementById('experience').value = userDetails.experience;
+            
+            // Hide submission elements
+            submissionMessage.style.display = 'none';
+            whatsappSubmitBtn.style.display = 'none';
+            whatsappSubmitBtn.innerHTML = '<i class="fab fa-whatsapp"></i> Send Results via WhatsApp';
+        });
+        
+        // ======================
+        // INITIAL LOAD
+        // ======================
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Registration form is shown by default
+            // Exam will start when user clicks "Start Exam"
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phillcode Agent Master Guide 2024</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --primary-dark: #1a252f;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --accent-light: #ff6b6b;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --gray: #7f8c8d;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, #ff9f43 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo span {
+            color: var(--accent-light);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .agent-badge {
+            background: var(--accent);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.95)), url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 0;
+            text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        
+        .hero h1 span {
+            color: var(--accent-light);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-light);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        /* Guide Container */
+        .guide-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 20px;
+        }
+        
+        .guide-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .guide-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .guide-header h2:after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .guide-header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 1.5rem auto 0;
+        }
+        
+        /* Chapter Cards */
+        .chapter-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .chapter-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 5px solid var(--secondary);
+        }
+        
+        .chapter-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .chapter-card.critical {
+            border-top-color: var(--accent);
+        }
+        
+        .chapter-card.highlight {
+            border-top-color: var(--success);
+        }
+        
+        .chapter-card-header {
+            padding: 1.8rem 1.8rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .chapter-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .chapter-card.critical .chapter-number {
+            background: var(--accent);
+        }
+        
+        .chapter-card.highlight .chapter-number {
+            background: var(--success);
+        }
+        
+        .chapter-card-header h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .chapter-card-body {
+            padding: 1.5rem 1.8rem;
+        }
+        
+        .chapter-card-body p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+        
+        .key-points {
+            list-style: none;
+        }
+        
+        .key-points li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+        
+        .key-points li:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+        
+        .key-points.critical li:before {
+            color: var(--accent);
+        }
+        
+        /* Detailed Sections */
+        .detail-section {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .detail-section h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-section h3 i {
+            color: var(--secondary);
+        }
+        
+        .method-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .method-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary);
+            transition: var(--transition);
+        }
+        
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        
+        .method-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Script Box */
+        .script-box {
+            background: #f0f8ff;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--secondary);
+            position: relative;
+        }
+        
+        .script-box:before {
+            content: 'SCRIPT';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-bottom-left-radius: 8px;
+        }
+        
+        .script-box p {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            white-space: pre-line;
+            line-height: 1.6;
+        }
+        
+        /* Do's and Don'ts */
+        .dos-donts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        @media (max-width: 768px) {
+            .dos-donts {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .dos, .donts {
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .dos {
+            background: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid var(--success);
+        }
+        
+        .donts {
+            background: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .dos h4, .donts h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .dos h4 {
+            color: var(--success);
+        }
+        
+        .donts h4 {
+            color: var(--accent);
+        }
+        
+        /* Commission Calculator */
+        .calculator {
+            background: white;
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            margin: 3rem 0;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .calculator h3 {
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+        
+        .calc-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .calc-input {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .calc-input label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--gray);
+        }
+        
+        .calc-input input {
+            padding: 0.8rem 1rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            width: 200px;
+        }
+        
+        .calc-result {
+            background: var(--gradient);
+            color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        
+        .calc-result h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .calc-result .amount {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0.5rem 0;
+            color: var(--accent-light);
+        }
+        
+        /* Daily Routine */
+        .routine-timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+        
+        .routine-timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--secondary);
+            transform: translateX(-50%);
+        }
+        
+        @media (max-width: 768px) {
+            .routine-timeline:before {
+                left: 30px;
+            }
+        }
+        
+        .routine-item {
+            display: flex;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .routine-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        
+        .routine-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        @media (max-width: 768px) {
+            .routine-item, .routine-item:nth-child(odd), .routine-item:nth-child(even) {
+                flex-direction: row;
+            }
+        }
+        
+        .routine-time {
+            flex: 0 0 100px;
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1;
+            margin: 0 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .routine-time {
+                margin-right: 2rem;
+                margin-left: 0;
+            }
+        }
+        
+        .routine-time .time {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+        
+        .routine-content {
+            flex: 1;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .routine-content h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: var(--gradient);
+            color: white;
+            text-align: center;
+            padding: 5rem 20px;
+            margin-top: 4rem;
+            border-radius: var(--radius);
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent-light);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #ff5252;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 4rem 20px 2rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-light);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-light);
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .chapter-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .stats {
+                gap: 2rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+            
+            .detail-section {
+                padding: 1.5rem;
+            }
+            
+            .calc-inputs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .calc-input input {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 4rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .guide-header h2 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+        
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: center;
+        }
+        
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .mobile-nav-links a:hover {
+            color: var(--accent-light);
+        }
+        
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .highlight-box:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--accent), #ff9f43);
+        }
+        
+        .highlight-box h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .highlight-box p {
+            color: var(--dark);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+        
+        /* Printable Section */
+        .printable-section {
+            background: white;
+            border: 2px dashed #ddd;
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .printable-section h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .print-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+        }
+        
+        .print-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-code"></i>
+                Phill<span>code</span>
+            </div>
+            
+            <div class="nav-links">
+                <a href="#guide">Master Guide</a>
+                <a href="#resources">Agent Resources</a>
+                <a href="#calculator">Commission Calc</a>
+                <a href="#exam.html">Take a test</a>
+                <div class="agent-badge">
+                    <i class="fas fa-user-secret"></i>
+                    AGENT PORTAL
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay">
+        <button class="mobile-menu-close">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="mobile-nav-links">
+            <a href="#guide">Master Guide</a>
+            <a href="#resources">Agent Resources</a>
+            <a href="#calculator">Commission Calculator</a>
+            <a href="#Client Spotting Methods">Training Modules</a>
+            <a href="#cta">Become an Agent</a>
+        </div>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content fade-in">
+            <h1>PHILLCODE AGENT <span>MASTER GUIDE</span></h1>
+            <div class="hero-subtitle">
+                The Complete System for Acquiring Clients Physically & Online
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">10</div>
+                    <div class="stat-label">Step System</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">30%</div>
+                    <div class="stat-label">Commission</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5/day</div>
+                    <div class="stat-label">Businesses to Scout</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">60K+/mo</div>
+                    <div class="stat-label">Potential Earnings</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Guide Content -->
+    <div class="guide-container" id="guide">
+        <div class="guide-header fade-in">
+            <h2>The Agent's Complete Playbook</h2>
+            <p>Everything you need to know to succeed as a Phillcode Agent, from mindset to execution.</p>
+        </div>
+        
+        <!-- Chapter 1: Your Role -->
+        <div class="chapter-card critical fade-in">
+            <div class="chapter-card-header">
+                <div class="chapter-number">1</div>
+                <h3>YOUR ROLE AS A PHILLCODE AGENT</h3>
+                <p style="color: var(--accent); font-weight: 600;">(VERY IMPORTANT)</p>
+            </div>
+            <div class="chapter-card-body">
+                <p><strong>You are NOT a web developer. You are NOT a designer.</strong></p>
+                <p>You are a <strong>PROBLEM FINDER + OPPORTUNITY CONNECTOR.</strong></p>
+                
+                <h4 style="margin: 1.5rem 0 1rem; color: var(--primary);">Your job is to:</h4>
+                <ul class="key-points critical">
+                    <li><strong>Find businesses with problems</strong> (poor online presence)</li>
+                    <li><strong>Show them opportunity</strong> (how Phillcode can help)</li>
+                    <li><strong>Connect them to Phillcode</strong> (introduction & follow-up)</li>
+                    <li><strong>Get paid commission</strong> (30% of project value)</li>
+                </ul>
+                
+                <div class="highlight-box">
+                    <h4><i class="fas fa-lightbulb"></i> KEY INSIGHT</h4>
+                    <p>If you can <strong>talk</strong> and <strong>observe</strong>, you can do this job. No technical skills required.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chapter 2: What Phillcode Sells -->
+        <div class="chapter-card fade-in">
+            <div class="chapter-card-header">
+                <div class="chapter-number">2</div>
+                <h3>WHAT PHILLCODE SELLS (MEMORIZE THIS)</h3>
+            </div>
+            <div class="chapter-card-body">
+                <p>You must clearly understand and communicate the services:</p>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0;">
+                    <div>
+                        <h4 style="color: var(--secondary); margin-bottom: 1rem;">Core Services</h4>
+                        <ul class="key-points">
+                            <li>Website design & development</li>
+                            <li>Branding (logo, colors, identity)</li>
+                            <li>Social media management</li>
+                            <li>Lead generation systems</li>
+                            <li>SEO & online visibility</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="color: var(--accent); margin-bottom: 1rem;">What Clients REALLY Buy</h4>
+                        <div class="dos-donts" style="grid-template-columns: 1fr; gap: 1rem;">
+                            <div class="donts" style="margin: 0; padding: 1rem;">
+                                <h4><i class="fas fa-times-circle"></i> NOT This</h4>
+                                <p>❌ "A website"<br>❌ "Social media posts"<br>❌ "A logo"</p>
+                            </div>
+                            <div class="dos" style="margin: 0; padding: 1rem;">
+                                <h4><i class="fas fa-check-circle"></i> BUT This</h4>
+                                <p>✅ More customers<br>✅ Professional image<br>✅ Trust & credibility<br>✅ Sales growth</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="script-box">
+                    <p><strong>Always talk about RESULTS:</strong>
+                    
+"Mr. Business Owner, I see you're doing great work, but your online presence isn't bringing you the customers you deserve. With a professional website and social media strategy, you could attract 5-10 more customers per week. That's 20-40 more customers per month, which means KSh 50,000-100,000+ in additional revenue monthly."
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chapter 3: Ideal Client -->
+        <div class="chapter-card highlight fade-in">
+            <div class="chapter-card-header">
+                <div class="chapter-number">3</div>
+                <h3>WHO YOUR IDEAL CLIENT IS</h3>
+            </div>
+            <div class="chapter-card-body">
+                <p>Target businesses that:</p>
+                <ul class="key-points" style="margin-bottom: 2rem;">
+                    <li><strong>Make money already</strong> (can afford your services)</li>
+                    <li><strong>Need more customers</strong> (growth mindset)</li>
+                    <li><strong>Look unprofessional online</strong> (or have no online presence)</li>
+                </ul>
+                
+                <h4 style="color: var(--primary); margin-bottom: 1rem;">Examples (HIGH CONVERSION RATE):</h4>
+                <div class="method-grid">
+                    <div class="method-card">
+                        <h4><i class="fas fa-cut"></i> Salons & Barbers</h4>
+                        <p>Need booking systems and portfolios</p>
+                    </div>
+                    <div class="method-card">
+                        <h4><i class="fas fa-clinic-medical"></i> Clinics & Pharmacies</h4>
+                        <p>Need credibility and appointment systems</p>
+                    </div>
+                    <div class="method-card">
+                        <h4><i class="fas fa-utensils"></i> Restaurants</h4>
+                        <p>Need online menus and delivery systems</p>
+                    </div>
+                    <div class="method-card">
+                        <h4><i class="fas fa-home"></i> Real Estate Agents</h4>
+                        <p>Need property listings and credibility</p>
+                    </div>
+                    <div class="method-card">
+                        <h4><i class="fas fa-dumbbell"></i> Gyms & Fitness</h4>
+                        <p>Need class schedules and member portals</p>
+                    </div>
+                    <div class="method-card">
+                        <h4><i class="fas fa-school"></i> Schools & Colleges</h4>
+                        <p>Need enrollment systems and information portals</p>
+                    </div>
+                </div>
+                
+                <div style="background: #fff5f5; padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem; border-left: 4px solid var(--accent);">
+                    <p style="margin: 0; font-weight: 600; color: var(--accent);">
+                        <i class="fas fa-exclamation-triangle"></i> AVOID:
+                    </p>
+                    <p style="margin: 0.5rem 0 0 0;">Broke startups or people "planning to start soon." Target established businesses.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chapter 4: Physical Acquisition -->
+        <div class="detail-section fade-in" id="training">
+            <h3><i class="fas fa-walking"></i> PHYSICAL CLIENT ACQUISITION (ON THE GROUND)</h3>
+            <p>This is where most agents fail — but it works best when done correctly.</p>
+            
+            <h4 style="margin-top: 2rem;">A) HOW TO SPOT A CLIENT PHYSICALLY</h4>
+            <p>Walk around: Town centers, Malls, Markets, Office blocks</p>
+            
+            <div class="method-grid">
+                <div class="method-card">
+                    <h4><i class="fas fa-search"></i> Look For:</h4>
+                    <p>• No website URL on signage<br>• No QR code for payments<br>• Old, faded posters/ads<br>• Poor or no branding<br>• Empty shop during business hours</p>
+                </div>
+                <div class="method-card">
+                    <h4><i class="fas fa-bullseye"></i> That's a Client If:</h4>
+                    <p>• Business card is just phone number<br>• Using personal Facebook for business<br>• Prices on whiteboard/notebook<br>• "Like our page" handwritten</p>
+                </div>
+            </div>
+            
+            <h4 style="margin-top: 2rem;">B) HOW TO APPROACH A BUSINESS (STEP-BY-STEP)</h4>
+            
+            <div class="routine-timeline">
+                <div class="routine-item">
+                    <div class="routine-time">
+                        <div class="time">Step 1</div>
+                    </div>
+                    <div class="routine-content">
+                        <h4>Enter Confidently</h4>
+                        <p>Smile. Dress clean. Be calm. Don't look desperate or nervous.</p>
+                    </div>
+                </div>
+                
+                <div class="routine-item">
+                    <div class="routine-time">
+                        <div class="time">Step 2</div>
+                    </div>
+                    <div class="routine-content">
+                        <h4>Start Friendly</h4>
+                        <p><strong>Never sell immediately.</strong> Say: "Hello, I like your business. Are you the owner or manager?"</p>
+                    </div>
+                </div>
+                
+                <div class="routine-item">
+                    <div class="routine-time">
+                        <div class="time">Step 3</div>
+                    </div>
+                    <div class="routine-content">
+                        <h4>Ask Discovery Questions</h4>
+                        <p>Let them talk. Ask:<br>
+                        • "How do customers find you?"<br>
+                        • "Do you get online inquiries?"<br>
+                        • "Are you on Google or Instagram?"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 style="margin-top: 2rem;">C) HOW TO PITCH (PHILLCODE SCRIPT)</h4>
+            <div class="script-box">
+                <p><strong>After listening, say:</strong>
+
+"We work with businesses like yours at Phillcode. We help them attract customers online and look more professional — which builds trust and increases sales.
+
+We usually start by creating a <strong>free demo website</strong> or branding concept to show what's possible. No cost, no obligation.
+
+<em>[Key word: FREE DEMO]</em>"
+                </p>
+            </div>
+            
+            <h4 style="margin-top: 2rem;">D) WHAT TO COLLECT FROM PHYSICAL CLIENTS</h4>
+            <p>You MUST collect this information to submit to Phillcode:</p>
+            
+            <div class="printable-section">
+                <h4><i class="fas fa-clipboard-list"></i> CLIENT INFORMATION FORM</h4>
+                <div style="text-align: left; max-width: 600px; margin: 1.5rem auto; background: white; padding: 1.5rem; border-radius: 8px; border: 1px solid #ddd;">
+                    <p><strong>Business Name:</strong> _________________________</p>
+                    <p><strong>Services/Products:</strong> _____________________</p>
+                    <p><strong>Phone Number:</strong> _________________________</p>
+                    <p><strong>WhatsApp:</strong> _____________________________</p>
+                    <p><strong>Email:</strong> _________________________________</p>
+                    <p><strong>Location:</strong> ______________________________</p>
+                    <p><strong>Goals:</strong> ❑ More calls ❑ More bookings ❑ More sales</p>
+                    <p><strong>Current Online Status:</strong> ❑ No website ❑ Bad website ❑ No social media ❑ Poor social media</p>
+                </div>
+                <button class="print-btn" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print This Form
+                </button>
+            </div>
+        </div>
+        
+        <!-- Chapter 5: Online Acquisition -->
+        <div class="detail-section fade-in">
+            <h3><i class="fas fa-globe"></i> ONLINE CLIENT ACQUISITION (DIGITAL HUNTING)</h3>
+            
+            <h4>A) GOOGLE MAPS METHOD (POWERFUL)</h4>
+            <div class="method-grid">
+                <div class="method-card">
+                    <h4><i class="fas fa-search"></i> Search:</h4>
+                    <p>"Salon near me"<br>"Restaurant Nairobi"<br>"Gym [your area]"<br>"Hardware shop [town]"</p>
+                </div>
+                <div class="method-card">
+                    <h4><i class="fas fa-check-circle"></i> Click Businesses</h4>
+                    <p>Check if they have:<br>• Website link<br>• Good photos<br>• Updated info<br>• Social media links</p>
+                </div>
+                <div class="method-card">
+                    <h4><i class="fas fa-bullseye"></i> That's a Client If:</h4>
+                    <p>❌ No website<br>❌ Bad photos<br>❌ No social media<br>❌ Outdated info</p>
+                </div>
+            </div>
+            
+            <h4 style="margin-top: 2rem;">B) INSTAGRAM METHOD</h4>
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; margin: 1.5rem 0;">
+                <p><strong>Search hashtags:</strong> #NairobiBusiness #KenyaEntrepreneur #SalonKenya #RestaurantNairobi</p>
+                <p><strong>Check for:</strong> Poor content • Inconsistent posting • No bio CTA • Low engagement</p>
+            </div>
+            
+            <div class="script-box">
+                <p><strong>Send this DM:</strong>
+
+"Hi 👋
+I came across your page and love what you do.
+I noticed your online presence can attract more customers with better branding.
+
+I work with Phillcode, and we help businesses grow online.
+Can I show you a free demo of what's possible?"
+                </p>
+            </div>
+            
+            <h4 style="margin-top: 2rem;">C) FACEBOOK METHOD</h4>
+            <ul class="key-points" style="margin: 1rem 0 2rem;">
+                <li>Join groups: "Business owners Kenya", "SMEs in Nairobi", "Entrepreneurs Kenya"</li>
+                <li><strong>Don't spam.</strong> Comment value first: "Branding is what makes customers trust you before buying."</li>
+                <li>Then DM interested people</li>
+            </ul>
+        </div>
+        
+        <!-- Chapter 6: Handling Objections -->
+        <div class="detail-section fade-in">
+            <h3><i class="fas fa-comments"></i> HOW TO HANDLE OBJECTIONS (VERY IMPORTANT)</h3>
+            
+            <div class="dos-donts">
+                <div class="dos">
+                    <h4><i class="fas fa-check-circle"></i> DO This</h4>
+                    <p><strong>"We don't have money"</strong><br>
+                    → "That's why we start with a demo — no pressure. When you see value, we discuss budget."</p>
+                    
+                    <p><strong>"We already have someone"</strong><br>
+                    → "That's great. We can still show you a comparison demo — no obligation."</p>
+                    
+                    <p><strong>"I'll think about it"</strong><br>
+                    → "No problem. I'll send you the demo and follow up in two days."</p>
+                </div>
+                
+                <div class="donts">
+                    <h4><i class="fas fa-times-circle"></i> DON'T Do This</h4>
+                    <p><strong>❌ Argue</strong> - "You're wrong to think that!"</p>
+                    <p><strong>❌ Pressure</strong> - "You have to decide now!"</p>
+                    <p><strong>❌ Give up</strong> - "Okay, bye then."</p>
+                    <p><strong>❌ Badmouth</strong> - "Your current guy sucks!"</p>
+                </div>
+            </div>
+            
+            <div class="highlight-box" style="margin-top: 2rem;">
+                <h4><i class="fas fa-graduation-cap"></i> PRO TIP: The 3-Follow-Up Rule</h4>
+                <p>1. Initial contact → 2. Share demo (1 day later) → 3. Check interest (3 days later) → 4. Final offer (7 days later)</p>
+                <p><strong>80% of sales happen after the 5th contact!</strong> Most agents give up after 2.</p>
+            </div>
+        </div>
+        
+        <!-- Chapter 7: Closing Clients -->
+        <div class="detail-section fade-in">
+            <h3><i class="fas fa-handshake"></i> HOW TO CLOSE CLIENTS (GET THEM TO PHILLCODE)</h3>
+            
+            <div style="background: #e8f4fc; padding: 2rem; border-radius: 8px; margin: 1.5rem 0; border-left: 4px solid var(--secondary);">
+                <p style="font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                    <i class="fas fa-exclamation-circle"></i> YOUR JOB IS NOT TO TAKE PAYMENT
+                </p>
+                <p>Your job is to: <strong>Book interest → Share demo → Connect client to Phillcode team</strong></p>
+            </div>
+            
+            <div class="script-box">
+                <p><strong>Closing Script:</strong>
+
+"Great! I'm glad you're interested.
+Our Phillcode team will handle pricing and onboarding professionally.
+
+I'll connect you with our project manager who will:
+1. Discuss your specific needs
+2. Provide exact pricing
+3. Create a timeline
+4. Handle all technical aspects
+
+You'll be in good hands. When would be a good time for them to call you?"
+                </p>
+            </div>
+            
+            <div class="dos-donts" style="margin-top: 2rem;">
+                <div class="dos">
+                    <h4><i class="fas fa-check-circle"></i> DO</h4>
+                    <p>• Get commitment for next step<br>• Schedule follow-up call<br>• Send thank you message<br>• Forward details to Phillcode</p>
+                </div>
+                <div class="donts">
+                    <h4><i class="fas fa-times-circle"></i> DON'T</h4>
+                    <p>• Discuss technical details<br>• Negotiate pricing<br>• Make promises you can't keep<br>• Take payment (send to Phillcode)</p>
+                </div>
+            </div>
+        </div>
+        
+   <!-- Commission Calculator -->
+<div class="calculator fade-in" id="calculator">
+    <h3>COMMISSION CALCULATOR</h3>
+    <p>Know exactly how much you'll earn from each client.</p>
+    
+    <div class="calc-inputs">
+        <div class="calc-input">
+            <label for="projectValue">Project Value (KSh)</label>
+            <input type="number" id="projectValue" value="50000" min="10000" max="1000000" step="10000">
+        </div>
+        
+        <div class="calc-input">
+            <label for="commissionRate">Commission Rate <span style="color: #e74c3c; font-size: 0.9em;">(Fixed at 20%)</span></label>
+            <input type="number" id="commissionRate" value="20" readonly style="background-color: #f0f0f0; cursor: not-allowed;">
+        </div>
+        
+        <div class="calc-input">
+            <label for="clientsPerMonth">Clients Per Month</label>
+            <input type="number" id="clientsPerMonth" value="4" min="1" max="20" step="1">
+        </div>
+    </div>
+    
+    <button class="btn btn-primary" id="calculateBtn">
+        <i class="fas fa-calculator"></i> Calculate Earnings
+    </button>
+    
+    <div class="calc-result" id="calcResult" style="display: none;">
+        <h4>YOUR MONTHLY EARNINGS</h4>
+        <div class="amount" id="monthlyEarnings">KSh 0</div>
+        <p>Per client: <span id="perClient">KSh 0</span> | Yearly: <span id="yearlyEarnings">KSh 0</span></p>
+    </div>
+</div>
+
+<script>
+// Commission Calculator
+function calculateCommission() {
+    const projectValue = parseInt(document.getElementById('projectValue').value) || 50000;
+    const commissionRate = 20; // Fixed at 20%
+    const clientsPerMonth = parseInt(document.getElementById('clientsPerMonth').value) || 4;
+    
+    const perClient = (projectValue * commissionRate) / 100;
+    const monthlyEarnings = perClient * clientsPerMonth;
+    const yearlyEarnings = monthlyEarnings * 12;
+    
+    document.getElementById('perClient').textContent = 'KSh ' + perClient.toLocaleString();
+    document.getElementById('monthlyEarnings').textContent = 'KSh ' + monthlyEarnings.toLocaleString();
+    document.getElementById('yearlyEarnings').textContent = 'KSh ' + yearlyEarnings.toLocaleString();
+    
+    document.getElementById('calcResult').style.display = 'block';
+    
+    // Animate the result
+    const resultDiv = document.getElementById('calcResult');
+    resultDiv.style.animation = 'none';
+    setTimeout(() => {
+        resultDiv.style.animation = 'fadeIn 0.6s ease';
+    }, 10);
+}
+
+// Initialize calculator when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up calculate button
+    const calculateBtn = document.getElementById('calculateBtn');
+    if (calculateBtn) {
+        calculateBtn.addEventListener('click', calculateCommission);
+    }
+    
+    // Set up input listeners for real-time calculation
+    const projectValueInput = document.getElementById('projectValue');
+    const clientsPerMonthInput = document.getElementById('clientsPerMonth');
+    
+    if (projectValueInput) {
+        projectValueInput.addEventListener('input', calculateCommission);
+    }
+    
+    if (clientsPerMonthInput) {
+        clientsPerMonthInput.addEventListener('input', calculateCommission);
+    }
+    
+    // Calculate on page load
+    calculateCommission();
+});
+</script>
+        
+        <!-- Chapter 8: Daily Routine -->
+        <div class="detail-section fade-in">
+            <h3><i class="fas fa-calendar-check"></i> AGENT DAILY ROUTINE (FOLLOW THIS)</h3>
+            
+            <div class="routine-timeline">
+                <div class="routine-item">
+                    <div class="routine-time">
+                        <div class="time">Daily</div>
+                    </div>
+                    <div class="routine-content">
+                        <h4>Talk to 5 businesses physically OR Send 20 DMs online</h4>
+                        <p>Consistency is key. Even on "bad days," do the minimum.</p>
+                    </div>
+                </div>
+                
+                <div class="routine-item">
+                    <div class="routine-time">
+                        <div class="time">Weekly</div>
+                    </div>
+                    <div class="routine-content">
+                        <h4>Submit 5 qualified leads to Phillcode</h4>
+                        <p>Focus on quality over quantity. Better to have 5 good leads than 20 bad ones.</p>
+                    </div>
+                </div>
+                
+                <div class="routine-item">
+                    <div class="routine-time">
+                        <div class="time">Monthly</div>
+                    </div>
+                    <div class="routine-content">
+                        <h4>Close 3–5 clients</h4>
+                        <p>Realistic goal: 3 clients at KSh 50,000 each = KSh 45,000 commission (30%).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <h4><i class="fas fa-chart-line"></i> THE CONSISTENCY FORMULA</h4>
+                <p><strong>5 conversations/day × 20 days/month = 100 conversations</strong><br>
+                100 conversations → 20 interested → 5 demos → 3 clients = KSh 45,000+ monthly</p>
+                <p style="font-weight: 700; color: var(--primary); margin-top: 0.5rem;">Consistency beats talent every time.</p>
+            </div>
+        </div>
+        
+        <!-- Chapter 9: Agent Mindset -->
+        <div class="detail-section fade-in">
+            <h3><i class="fas fa-brain"></i> AGENT MINDSET (THIS MAKES YOU RICH)</h3>
+            
+            <div class="method-grid">
+                <div class="method-card">
+                    <h4><i class="fas fa-thumbs-up"></i> BE THIS</h4>
+                    <p>• Calm & confident<br>• Helpful & consultative<br>• Professional<br>• Solution-oriented<br>• Patient</p>
+                </div>
+                <div class="method-card">
+                    <h4><i class="fas fa-thumbs-down"></i> NOT THIS</h4>
+                    <p>• Desperate<br>• Argumentative<br>• Pushy salesperson<br>• Begging<br>• Rushed</p>
+                </div>
+            </div>
+            
+            <div style="background: #fffaf0; padding: 2rem; border-radius: 8px; margin-top: 2rem; border-left: 4px solid var(--warning);">
+                <h4 style="color: var(--warning); margin-bottom: 1rem;"><i class="fas fa-crown"></i> MINDSET SHIFT</h4>
+                <p style="font-size: 1.2rem; font-weight: 700; color: var(--primary);">
+                    You are not begging for business.<br>
+                    You are offering growth opportunities.
+                </p>
+                <p style="margin-top: 1rem;">You're connecting them to solutions that will make them more money. You're doing them a favor.</p>
+            </div>
+        </div>
+        
+        <!-- Final Truth -->
+        <div class="detail-section fade-in" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white;">
+            <h3 style="color: white; border-bottom-color: rgba(255,255,255,0.2);"><i class="fas fa-fire"></i> FINAL TRUTH</h3>
+            
+            <div style="text-align: center; padding: 2rem 0;">
+                <div style="font-size: 2rem; margin-bottom: 1.5rem; color: var(--accent-light);">
+                    <i class="fas fa-eye"></i> +
+                    <i class="fas fa-comment"></i> +
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                
+                <h4 style="font-size: 1.8rem; margin-bottom: 1.5rem; color: white;">If you master these 3 skills:</h4>
+                
+                <div class="method-grid" style="color: var(--dark);">
+                    <div class="method-card">
+                        <h4><i class="fas fa-eye"></i> Observation</h4>
+                        <p>Seeing business problems others miss</p>
+                    </div>
+                    <div class="method-card">
+                        <h4><i class="fas fa-comment"></i> Conversation</h4>
+                        <p>Asking the right questions, listening, presenting solutions</p>
+                    </div>
+                    <div class="method-card">
+                        <h4><i class="fas fa-sync-alt"></i> Follow-up</h4>
+                        <p>Persistence without being annoying</p>
+                    </div>
+                </div>
+                
+                <p style="font-size: 1.3rem; margin-top: 2rem; font-weight: 700;">
+                    You will always make money — with Phillcode or any agency.
+                </p>
+            </div>
+        </div>
+    </div>
+    <section class="client-spotting-section">
+    <h2><i class="fas fa-search-location"></i> Client Spotting Methods</h2>
+    <p class="section-description">Master different approaches to identify potential clients based on various psychological, geographical, and business factors.</p>
+    
+    <div class="spotting-grid">
+        <div class="spotting-card">
+            <div class="card-icon">
+                <i class="fas fa-brain"></i>
+            </div>
+            <h3>Psychological Spotting</h3>
+            <p>Identify clients based on behavioral patterns, communication styles, and psychological triggers.</p>
+            <a href="psychology.html" class="card-link">
+                Explore Psychology Method
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="spotting-card">
+            <div class="card-icon">
+                <i class="fas fa-globe-americas"></i>
+            </div>
+            <h3>Global Spotting</h3>
+            <p>Find clients across different countries and cultures using international market analysis.</p>
+            <a href="globalspotting.html" class="card-link">
+                Explore Global Method
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="spotting-card">
+            <div class="card-icon">
+                <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <h3>Ground Scouting</h3>
+            <p>Locate clients in your local area through physical presence and community engagement.</p>
+            <a href="groundscouting.html" class="card-link">
+                Explore Ground Scouting
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="spotting-card">
+            <div class="card-icon">
+                <i class="fas fa-briefcase"></i>
+            </div>
+            <h3>Business Spotting</h3>
+            <p>Identify client opportunities within specific industries and business sectors.</p>
+            <a href="businessspotting.html" class="card-link">
+                Explore Business Method
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="spotting-card">
+            <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Intelligence Spotting</h3>
+            <p>Use data analytics and market intelligence to find high-value clients.</p>
+            <a href="intelligence.html" class="card-link">
+                Explore Intelligence Method
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="spotting-card">
+            <div class="card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <h3>Social Media Management</h3>
+            <p>Leverage social platforms to identify and engage with potential clients.</p>
+            <a href="socialmediamanagement.html" class="card-link">
+                Explore Social Media Method
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    
+    <div class="resources-footer">
+        <p>Need additional resources for client spotting?</p>
+        <div class="resource-links">
+            <a href="resources.html" class="resource-btn">
+                <i class="fas fa-tools"></i> Resources
+            </a>
+            <a href="socials.html" class="resource-btn">
+                <i class="fas fa-share-alt"></i> Social Channels
+            </a>
+            <a href="index.html" class="resource-btn">
+                <i class="fas fa-home"></i> Home
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .client-spotting-section {
+        padding: 2rem;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 12px;
+        margin: 2rem 0;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    
+    .client-spotting-section h2 {
+        color: #2c3e50;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .client-spotting-section h2 i {
+        color: #3498db;
+    }
+    
+    .section-description {
+        color: #7f8c8d;
+        margin-bottom: 2rem;
+        font-size: 1.05rem;
+        line-height: 1.5;
+        max-width: 800px;
+    }
+    
+    .spotting-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+    
+    .spotting-card {
+        background: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-top: 4px solid #3498db;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    
+    .spotting-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+    
+    .card-icon {
+        background: #f0f7ff;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    
+    .card-icon i {
+        font-size: 1.5rem;
+        color: #3498db;
+    }
+    
+    .spotting-card h3 {
+        color: #2c3e50;
+        margin-bottom: 0.75rem;
+        font-size: 1.3rem;
+    }
+    
+    .spotting-card p {
+        color: #5d6d7e;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+        flex-grow: 1;
+    }
+    
+    .card-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #3498db;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.5rem 0;
+        transition: color 0.2s ease, gap 0.2s ease;
+    }
+    
+    .card-link:hover {
+        color: #2980b9;
+        gap: 12px;
+    }
+    
+    .resources-footer {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .resources-footer p {
+        color: #5d6d7e;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+    
+    .resource-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .resource-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #3498db;
+        color: white;
+        padding: 0.7rem 1.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.3s ease, transform 0.2s ease;
+    }
+    
+    .resource-btn:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+    }
+    
+    /* Media Queries */
+    @media (max-width: 768px) {
+        .client-spotting-section {
+            padding: 1.5rem;
+        }
+        
+        .spotting-grid {
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+        }
+        
+        .resource-links {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .resource-btn {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .client-spotting-section {
+            padding: 1rem;
+        }
+        
+        .client-spotting-section h2 {
+            font-size: 1.5rem;
+        }
+        
+        .spotting-card {
+            padding: 1.2rem;
+        }
+    }
+</style>
+
+<script>
+    // Add interactive card functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.spotting-card');
+        
+        cards.forEach(card => {
+            // Add click tracking for analytics (optional)
+            card.addEventListener('click', function(e) {
+                // Don't trigger if clicking on the link directly
+                if (!e.target.closest('.card-link')) {
+                    const link = this.querySelector('.card-link');
+                    if (link) {
+                        // Optional: Track which card was clicked
+                        console.log('Navigating to: ' + link.getAttribute('href'));
+                    }
+                }
+            });
+            
+            // Add keyboard navigation
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const link = this.querySelector('.card-link');
+                    if (link) {
+                        window.location.href = link.getAttribute('href');
+                    }
+                }
+            });
+            
+            // Make cards focusable for accessibility
+            card.setAttribute('tabindex', '0');
+        });
+        
+        // Add a simple animation on page load
+        setTimeout(() => {
+            document.querySelector('.client-spotting-section').style.opacity = '1';
+            document.querySelector('.client-spotting-section').style.transform = 'translateY(0)';
+        }, 100);
+    });
+</script>
+    
+    <!-- CTA Section -->
+    <section class="cta-section" id="cta">
+        <h2>Ready to Start Earning as a Phillcode Agent?</h2>
+        <p>Join hundreds of agents who are building sustainable income by connecting businesses with digital solutions. No experience needed — just the willingness to learn and take action.</p>
+        
+        <div class="cta-buttons">
+            <a href="#contact" class="btn btn-primary">
+                <i class="fas fa-user-plus"></i> Become an Agent Today
+            </a>
+            <a href="#training" class="btn btn-secondary">
+                <i class="fas fa-play-circle"></i> Start Training Now
+            </a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer id="resources">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Phillcode Agent Network</h4>
+                <p>Bridging offline hustle with online presence. We train ordinary people to become extraordinary business connectors.</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#guide">Master Guide</a></li>
+                    <li><a href="#calculator">Commission Calculator</a></li>
+                    <li><a href="#training">Training Modules</a></li>
+                    <li><a href="#contact">Contact Support</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Agent Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Pitch Templates</a></li>
+                    <li><a href="#">Client Information Form</a></li>
+                    <li><a href="#">Objection Handling Guide</a></li>
+                    <li><a href="#">Commission Agreement</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> +254 790617211</li>
+                    <li><i class="fas fa-envelope"></i> philcode@phillcode.com</li>
+                    <li><i class="fas fa-whatsapp"></i> WhatsApp: +254790617211</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Nairobi, Kenya</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2024 Phillcode Agent Network. All rights reserved. | Agent Master Guide v2.0</p>
+        </div>
+    </footer>
+
+    <script>
+       // Mobile Menu Toggle
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const mobileMenuClose = document.querySelector('.mobile-menu-close');
+const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+
+mobileMenuBtn.addEventListener('click', () => {
+    mobileMenuOverlay.classList.add('active');
+});
+
+mobileMenuClose.addEventListener('click', () => {
+    mobileMenuOverlay.classList.remove('active');
+});
+
+// Close mobile menu when clicking a link
+document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+        mobileMenuOverlay.classList.remove('active');
+    });
+});
+
+// Commission Calculator
+function calculateCommission() {
+    const projectValue = parseInt(document.getElementById('projectValue').value) || 50000;
+    const commissionRate = 20; // Fixed at 20%
+    const clientsPerMonth = parseInt(document.getElementById('clientsPerMonth').value) || 4;
+    
+    const perClient = (projectValue * commissionRate) / 100;
+    const monthlyEarnings = perClient * clientsPerMonth;
+    const yearlyEarnings = monthlyEarnings * 12;
+    
+    document.getElementById('perClient').textContent = 'KSh ' + perClient.toLocaleString();
+    document.getElementById('monthlyEarnings').textContent = 'KSh ' + monthlyEarnings.toLocaleString();
+    document.getElementById('yearlyEarnings').textContent = 'KSh ' + yearlyEarnings.toLocaleString();
+    
+    document.getElementById('calcResult').style.display = 'block';
+    
+    // Animate the result
+    const resultDiv = document.getElementById('calcResult');
+    resultDiv.style.animation = 'none';
+    setTimeout(() => {
+        resultDiv.style.animation = 'fadeIn 0.6s ease';
+    }, 10);
+}
+
+// Initialize calculator on page load
+window.addEventListener('load', calculateCommission);
+
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            window.scrollTo({
+                top: targetElement.offsetTop - 80,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Also need to update the HTML input field to reflect 20% commission and make it readonly
+// Add this function to update the HTML on page load
+function updateCommissionDisplay() {
+    // Remove the commission rate input field or make it readonly
+    const commissionInput = document.getElementById('commissionRate');
+    if (commissionInput) {
+        commissionInput.value = 20;
+        commissionInput.readOnly = true;
+        commissionInput.style.backgroundColor = '#f0f0f0';
+        commissionInput.style.cursor = 'not-allowed';
+        
+        // Add a label to indicate it's fixed
+        const label = commissionInput.previousElementSibling;
+        if (label && label.tagName === 'LABEL') {
+            label.innerHTML = 'Commission Rate <span style="color: #e74c3c; font-size: 0.9em;">(Fixed at 20%)</span>';
+        }
+    }
+}
+
+// Call this when the page loads
+window.addEventListener('DOMContentLoaded', () => {
+    updateCommissionDisplay();
+    calculateCommission();
+});
+        
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all sections for animation
+        document.querySelectorAll('.chapter-card, .detail-section, .calculator').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Progress indicator
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.body.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const scrollPercentRounded = Math.round(scrollPercent * 100);
+            
+            // Update progress in header
+            const agentBadge = document.querySelector('.agent-badge');
+            if (scrollPercentRounded < 100) {
+                agentBadge.innerHTML = `<i class="fas fa-user-secret"></i> AGENT GUIDE: ${scrollPercentRounded}%`;
+            } else {
+                agentBadge.innerHTML = `<i class="fas fa-graduation-cap"></i> AGENT MASTERED`;
+            }
+        });
+        
+        // Print functionality
+        function printGuide() {
+            const printContent = document.querySelector('.guide-container').innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Phillcode Agent Master Guide - Printable Version</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 20px; }
+                        h1, h2, h3 { color: #2c3e50; }
+                        .script-box { background: #f0f8ff; padding: 15px; border-left: 4px solid #3498db; margin: 15px 0; }
+                        .key-points li { margin-bottom: 10px; }
+                        @media print {
+                            .no-print { display: none; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Phillcode Agent Master Guide</h1>
+                    <p><em>Printed on ${new Date().toLocaleDateString()}</em></p>
+                    <hr>
+                    ${printContent}
+                    <div class="no-print">
+                        <hr>
+                        <p style="text-align: center; color: #7f8c8d; font-size: 0.9rem;">
+                            &copy; 2024 Phillcode Agent Network. For authorized agents only.
+                        </p>
+                    </div>
+                </body>
+                </html>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContent;
+            location.reload();
+        }
+        
+        // Add print button functionality
+        const printBtn = document.querySelector('.print-btn');
+        if (printBtn) {
+            printBtn.addEventListener('click', printGuide);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phillcode | Social Media Scouting</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --facebook: #1877f2;
+            --instagram: #e4405f;
+            --linkedin: #0a66c2;
+            --tiktok: #000000;
+            --whatsapp: #25d366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.2;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Platform Cards */
+        .platform-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .platform-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .platform-header {
+            padding: 1.5rem;
+            text-align: center;
+            color: white;
+        }
+
+        .platform-header.facebook {
+            background-color: var(--facebook);
+        }
+
+        .platform-header.instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .platform-header.linkedin {
+            background-color: var(--linkedin);
+        }
+
+        .platform-header.tiktok {
+            background-color: var(--tiktok);
+        }
+
+        .platform-header.whatsapp {
+            background-color: var(--whatsapp);
+        }
+
+        .platform-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .platform-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .platform-content {
+            padding: 1.5rem;
+        }
+
+        .platform-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .platform-content ul {
+            list-style-type: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .platform-content li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .platform-content li:before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+
+        .search-terms {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+        }
+
+        .search-terms h4 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .terms-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .term-tag {
+            background: var(--light);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        /* Sample Messages */
+        .message-samples {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .message-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1.5rem;
+        }
+
+        .message-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .message-tab.active {
+            border-bottom: 3px solid var(--secondary);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .message-content {
+            display: none;
+        }
+
+        .message-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .message-box {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .message-box:after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #f8f9fa;
+        }
+
+        .copy-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+        }
+
+        /* Scouting Checklist */
+        .checklist {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .checklist-icon {
+            margin-right: 1rem;
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        .checklist-content h3 {
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .platform-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+
+            .message-tabs {
+                overflow-x: auto;
+                white-space: nowrap;
+                padding-bottom: 5px;
+            }
+
+            .message-tab {
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <div class="logo">Phillcode</div>
+            <h1 class="page-title">Social Media Scouting Mastery</h1>
+            <p class="tagline">Learn how to find high-potential clients across all major platforms</p>
+        </div>
+    </header>
+<!-- Back Button -->
+<button class="back-button" onclick="goBack()">← Back</button>
+
+<style>
+  .back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    background: linear-gradient(135deg, #4b6cb7, #182848);
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .back-button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #182848, #4b6cb7);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+
+  .back-button:active {
+    transform: scale(0.95);
+  }
+</style>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+
+    <div class="container">
+        <section>
+            <div class="section-title">
+                <h2>Platform-Specific Scouting Strategies</h2>
+            </div>
+
+            <div class="platform-cards">
+                <!-- Facebook Card -->
+                <div class="platform-card">
+                    <div class="platform-header facebook">
+                        <div class="platform-icon">f</div>
+                        <div class="platform-name">Facebook</div>
+                    </div>
+                    <div class="platform-content">
+                        <h3>Best For:</h3>
+                        <ul>
+                            <li>Local small businesses</li>
+                            <li>Community groups</li>
+                            <li>Marketplace sellers</li>
+                            <li>Service providers</li>
+                        </ul>
+
+                        <h3>Scouting Techniques:</h3>
+                        <ul>
+                            <li>Join local business groups (e.g., "Nairobi Small Businesses")</li>
+                            <li>Search Marketplace for sellers without websites</li>
+                            <li>Look for pages with poor design/no CTA buttons</li>
+                            <li>Monitor comments for "Do you have a website?"</li>
+                        </ul>
+
+                        <div class="search-terms">
+                            <h4>Top Search Terms:</h4>
+                            <div class="terms-list">
+                                <span class="term-tag">"no website"</span>
+                                <span class="term-tag">"DM to order"</span>
+                                <span class="term-tag">"contact for price"</span>
+                                <span class="term-tag">"available on WhatsApp"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instagram Card -->
+                <div class="platform-card">
+                    <div class="platform-header instagram">
+                        <div class="platform-icon">ig</div>
+                        <div class="platform-name">Instagram</div>
+                    </div>
+                    <div class="platform-content">
+                        <h3>Best For:</h3>
+                        <ul>
+                            <li>Creative businesses</li>
+                            <li>Fashion & beauty</li>
+                            <li>Food businesses</li>
+                            <li>Young entrepreneurs</li>
+                        </ul>
+
+                        <h3>Scouting Techniques:</h3>
+                        <ul>
+                            <li>Search location tags (e.g., #NairobiBusiness)</li>
+                            <li>Look for "Link in bio" with no actual website</li>
+                            <li>Find businesses with high engagement but no online store</li>
+                            <li>Check Stories for "DM to order" posts</li>
+                        </ul>
+
+                        <div class="search-terms">
+                            <h4>Top Search Hashtags:</h4>
+                            <div class="terms-list">
+                                <span class="term-tag">#NairobiSalon</span>
+                                <span class="term-tag">#KenyanMade</span>
+                                <span class="term-tag">#MombasaBusiness</span>
+                                <span class="term-tag">#KisumuHustle</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LinkedIn Card -->
+                <div class="platform-card">
+                    <div class="platform-header linkedin">
+                        <div class="platform-icon">in</div>
+                        <div class="platform-name">LinkedIn</div>
+                    </div>
+                    <div class="platform-content">
+                        <h3>Best For:</h3>
+                        <ul>
+                            <li>Professional services</li>
+                            <li>B2B companies</li>
+                            <li>Freelancers</li>
+                            <li>Corporate clients</li>
+                        </ul>
+
+                        <h3>Scouting Techniques:</h3>
+                        <ul>
+                            <li>Search for "Founder" or "Owner" in job titles</li>
+                            <li>Look for minimal company pages</li>
+                            <li>Find posts about business growth challenges</li>
+                            <li>Connect with startup founders</li>
+                        </ul>
+
+                        <div class="search-terms">
+                            <h4>Top Search Terms:</h4>
+                            <div class="terms-list">
+                                <span class="term-tag">"growing my business"</span>
+                                <span class="term-tag">"new startup"</span>
+                                <span class="term-tag">"digital presence"</span>
+                                <span class="term-tag">"business expansion"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TikTok Card -->
+                <div class="platform-card">
+                    <div class="platform-header tiktok">
+                        <div class="platform-icon">tt</div>
+                        <div class="platform-name">TikTok</div>
+                    </div>
+                    <div class="platform-content">
+                        <h3>Best For:</h3>
+                        <ul>
+                            <li>Young entrepreneurs</li>
+                            <li>Trendy products</li>
+                            <li>Creative services</li>
+                            <li>Viral businesses</li>
+                        </ul>
+
+                        <h3>Scouting Techniques:</h3>
+                        <ul>
+                            <li>Search #SmallBusinessKenya</li>
+                            <li>Look for "DM to order" in captions</li>
+                            <li>Find businesses showing products but no store</li>
+                            <li>Watch for comments asking about websites</li>
+                        </ul>
+
+                        <div class="search-terms">
+                            <h4>Top Search Hashtags:</h4>
+                            <div class="terms-list">
+                                <span class="term-tag">#KenyanBusiness</span>
+                                <span class="term-tag">#HustleKE</span>
+                                <span class="term-tag">#MadeInKenya</span>
+                                <span class="term-tag">#SupportLocalKE</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Card -->
+                <div class="platform-card">
+                    <div class="platform-header whatsapp">
+                        <div class="platform-icon">wa</div>
+                        <div class="platform-name">WhatsApp</div>
+                    </div>
+                    <div class="platform-content">
+                        <h3>Best For:</h3>
+                        <ul>
+                            <li>Local informal businesses</li>
+                            <li>Service providers</li>
+                            <li>Quick transactions</li>
+                            <li>Community sellers</li>
+                        </ul>
+
+                        <h3>Scouting Techniques:</h3>
+                        <ul>
+                            <li>Join business WhatsApp groups</li>
+                            <li>Monitor status updates for sellers</li>
+                            <li>Look for "WhatsApp only" businesses</li>
+                            <li>Find catalog sellers without websites</li>
+                        </ul>
+
+                        <div class="search-terms">
+                            <h4>Key Indicators:</h4>
+                            <div class="terms-list">
+                                <span class="term-tag">"Call to order"</span>
+                                <span class="term-tag">"WhatsApp only"</span>
+                                <span class="term-tag">"No website"</span>
+                                <span class="term-tag">"DM for price"</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="message-samples">
+            <div class="section-title">
+                <h2>Effective Outreach Messages</h2>
+            </div>
+
+            <div class="message-tabs">
+                <div class="message-tab active" data-tab="initial">Initial Contact</div>
+                <div class="message-tab" data-tab="followup">Follow-Up</div>
+                <div class="message-tab" data-tab="objection">Objection Handling</div>
+                <div class="message-tab" data-tab="closing">Closing</div>
+            </div>
+
+            <div class="message-content active" id="initial">
+                <div class="message-box">
+                    <p>"Hi [Name], I came across your [product/service] and I'm impressed! Have you considered making it easier for customers to find and order from you online? I specialize in helping businesses like yours get professional websites that attract more customers. Would you be open to a quick chat about this?"</p>
+                    <button class="copy-btn">Copy Message</button>
+                </div>
+                <div class="message-box">
+                    <p>"Hello! I noticed your amazing [product] but couldn't find your website. Many of your potential customers might be searching for you online. We can help you create an affordable website that showcases your offerings and takes orders 24/7. Interested to learn more?"</p>
+                    <button class="copy-btn">Copy Message</button>
+                </div>
+            </div>
+
+            <div class="message-content" id="followup">
+                <div class="message-box">
+                    <p>"Hi [Name], just following up on my previous message. I wanted to share that we recently helped [similar business] increase their customer inquiries by 40% with a simple website. Would you be available for a quick 10-minute call this week to explore how we could do the same for you?"</p>
+                    <button class="copy-btn">Copy Message</button>
+                </div>
+                <div class="message-box">
+                    <p>"Hello again! I understand you're busy, but I genuinely believe we could help more people discover your business online. Here's a quick example of what we could create for you: [link to sample]. Would love to hear your thoughts!"</p>
+                    <button class="copy-btn">Copy Message</button>
+                </div>
+            </div>
+
+            <div class="message-content" id="objection">
+                <div class="message-box">
+                    <p>"I understand cost is a concern. Many of our clients see the website pay for itself within weeks through new customers. We offer flexible payment options starting at just [price]. Would that be more manageable for you?"</p>
+                    <button class="copy-btn">Copy Message</button>
+                </div>
+                <div class="message-box">
+                    <p>"You're right that social media works well now. But a website gives you full control, appears in Google searches, and works even if social media algorithms change. It's about owning your digital space while still using social media to drive traffic there. Would you like to see examples of how this works?"</p>
+                    <button class="copy-btn">Copy Message</button>
+                </div>
+            </div>
+
+            <div class="message-content" id="closing">
+                <div class="message-box">
+                    <p>"Great! To get started, I just need a few details about your business. We'll then create a custom proposal showing exactly how your website will look and function. When would be a good time to go over this together?"</p>
+                    <button class="copy-btn">Copy Message</button>
+                </div>
+                <div class="message-box">
+                    <p>"Perfect! We're currently offering [discount/incentive] for new clients who sign up this week. Shall I reserve your spot and we can begin the process tomorrow?"</p>
+                    <button class="copy-btn">Copy Message</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="checklist">
+            <div class="section-title">
+                <h2>Social Media Scouting Checklist</h2>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-icon">✓</div>
+                <div class="checklist-content">
+                    <h3>Profile Assessment</h3>
+                    <p>Check if the business has a website link, professional bio, or clear call-to-action</p>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-icon">✓</div>
+                <div class="checklist-content">
+                    <h3>Engagement Review</h3>
+                    <p>Look for comments asking about websites, online ordering, or more information</p>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-icon">✓</div>
+                <div class="checklist-content">
+                    <h3>Content Analysis</h3>
+                    <p>Note if they post products/services but have no way to purchase online</p>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-icon">✓</div>
+                <div class="checklist-content">
+                    <h3>Competitor Comparison</h3>
+                    <p>Check if similar businesses have websites while this one doesn't</p>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <div class="checklist-icon">✓</div>
+                <div class="checklist-content">
+                    <h3>Growth Potential</h3>
+                    <p>Assess if they're active but might be limited by lack of digital presence</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Tab functionality
+        const tabs = document.querySelectorAll('.message-tab');
+        const contents = document.querySelectorAll('.message-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Copy button functionality
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const messageBox = button.parentElement;
+                const messageText = messageBox.querySelector('p').textContent;
+                
+                navigator.clipboard.writeText(messageText).then(() => {
+                    const originalText = button.textContent;
+                    button.textContent = 'Copied!';
+                    
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                    }, 2000);
+                });
+            });
+        });
+
+        // Animate checklist items on scroll
+        const checklistItems = document.querySelectorAll('.checklist-item');
+        
+        const animateChecklist = () => {
+            checklistItems.forEach((item, index) => {
+                const itemPosition = item.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (itemPosition < screenPosition) {
+                    item.style.animation = `fadeIn 0.5s ease forwards ${index * 0.2}s`;
+                    item.style.opacity = '0';
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateChecklist);
+        animateChecklist(); // Run once on load
+    </script>
+</body>
+</html>

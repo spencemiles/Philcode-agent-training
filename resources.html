@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phillcode | Agent Resources</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --resource1: #9b59b6;
+            --resource2: #1abc9c;
+            --resource3: #f39c12;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--resource1), var(--resource2));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Resource Cards */
+        .resource-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .resource-header {
+            padding: 1.5rem;
+            background-color: var(--resource1);
+            color: white;
+            font-weight: 600;
+            font-size: 1.3rem;
+        }
+
+        .resource-content {
+            padding: 1.5rem;
+        }
+
+        .resource-content h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+
+        .resource-content ul {
+            list-style-type: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-content li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .resource-content li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary);
+        }
+
+        /* Business Type Specific */
+        .business-types {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 3rem;
+        }
+
+        .type-tabs {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .type-tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .type-tab.active {
+            border-bottom: 3px solid var(--secondary);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .type-content {
+            display: none;
+        }
+
+        .type-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .resource-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .page-title {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <div class="logo">Phillcode</div>
+            <h1 class="page-title">Agent Resource Hub</h1>
+            <p class="tagline">Essential tools and templates for successful client acquisition</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section>
+            <div class="section-title">
+                <h2>Core Agent Resources</h2>
+                <p>Downloadable tools to streamline your scouting process</p>
+            </div>
+
+            <div class="resource-cards">
+                <!-- Pitch Templates Card -->
+                <div class="resource-card">
+                    <div class="resource-header">Pitch Templates</div>
+                    <div class="resource-content">
+                        <h3>Pre-written messages for different scenarios:</h3>
+                        <ul>
+                            <li><strong>Cold Outreach:</strong> Social media/email templates</li>
+                            <li><strong>In-Person Approach:</strong> Conversation starters</li>
+                            <li><strong>Follow-Ups:</strong> 3-stage follow-up sequences</li>
+                            <li><strong>Objection Handlers:</strong> Responses to common concerns</li>
+                            <li><strong>Closing Scripts:</strong> Getting the final commitment</li>
+                        </ul>
+                        
+                        <h3>Advanced Pitch Strategies:</h3>
+                        <ul>
+                            <li>Psychological triggers to include</li>
+                            <li>How to personalize templates</li>
+                            <li>Timing and frequency guidelines</li>
+                            <li>A/B testing different approaches</li>
+                        </ul>
+                        
+                        <a href="#" class="download-btn">Download Pitch Templates</a>
+                    </div>
+                </div>
+
+                <!-- Client Information Form Card -->
+                <div class="resource-card">
+                    <div class="resource-header">Client Information Form</div>
+                    <div class="resource-content">
+                        <h3>Comprehensive business assessment:</h3>
+                        <ul>
+                            <li>Digital presence evaluation</li>
+                            <li>Customer flow analysis</li>
+                            <li>Competitive positioning</li>
+                            <li>Technical capability assessment</li>
+                        </ul>
+                        
+                        <h3>Business-Specific Sections:</h3>
+                        <ul>
+                            <li>Retail: Inventory, payment methods</li>
+                            <li>Services: Booking, scheduling</li>
+                            <li>Food: Menu, delivery options</li>
+                            <li>Professionals: Portfolio needs</li>
+                        </ul>
+                        
+                        <h3>Additional Features:</h3>
+                        <ul>
+                            <li>Scoring system to prioritize leads</li>
+                            <li>Conversion potential estimator</li>
+                            <li>Phillcode service matching guide</li>
+                        </ul>
+                        
+                        <a href="#" class="download-btn">Download Client Form</a>
+                    </div>
+                </div>
+
+                <!-- Social Media Guide Card -->
+                <div class="resource-card">
+                    <div class="resource-header">Social Media Scouting Guide</div>
+                    <div class="resource-content">
+                        <h3>Platform-Specific Strategies:</h3>
+                        <ul>
+                            <li><strong>Facebook:</strong> Group hunting techniques</li>
+                            <li><strong>Instagram:</strong> Hashtag combinations</li>
+                            <li><strong>LinkedIn:</strong> B2B prospecting</li>
+                            <li><strong>TikTok:</strong> Emerging business trends</li>
+                            <li><strong>WhatsApp:</strong> Community networks</li>
+                        </ul>
+                        
+                        <h3>Advanced Scouting Tactics:</h3>
+                        <ul>
+                            <li>Boolean search operators</li>
+                            <li>Competitor analysis methods</li>
+                            <li>Lead tracking spreadsheet</li>
+                            <li>Automation tools (without spamming)</li>
+                        </ul>
+                        
+                        <a href="#" class="download-btn">Download Scouting Guide</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="business-types">
+            <div class="section-title">
+                <h2>Business-Specific Pitch Kits</h2>
+                <p>Tailored approaches for different industries</p>
+            </div>
+
+            <div class="type-tabs">
+                <div class="type-tab active" data-tab="retail">Retail</div>
+                <div class="type-tab" data-tab="food">Food Service</div>
+                <div class="type-tab" data-tab="professional">Professionals</div>
+                <div class="type-tab" data-tab="manufacturing">Manufacturing</div>
+                <div class="type-tab" data-tab="services">Local Services</div>
+            </div>
+
+            <div class="type-content active" id="retail">
+                <h3>Retail Business Toolkit</h3>
+                <ul>
+                    <li><strong>Key Pain Points:</strong> Inventory visibility, lost sales from out-of-stock items, limited store hours</li>
+                    <li><strong>Pitch Angle:</strong> "Show customers your full inventory 24/7 and never miss a sale"</li>
+                    <li><strong>Essential Features:</strong> Product catalog with filters, stock level indicators, WhatsApp order integration</li>
+                    <li><strong>Success Metrics:</strong> "Our retail clients typically see 20-40% increase in sales within 3 months"</li>
+                    <li><strong>Objection Handler:</strong> "Even if customers ultimately buy in-store, 78% research products online first"</li>
+                </ul>
+                <a href="#" class="download-btn">Download Retail Pitch Kit</a>
+            </div>
+
+            <div class="type-content" id="food">
+                <h3>Food Service Toolkit</h3>
+                <ul>
+                    <li><strong>Key Pain Points:</strong> Phone order mistakes, busy lines during peaks, menu updates</li>
+                    <li><strong>Pitch Angle:</strong> "Reduce order errors and serve more customers without more staff"</li>
+                    <li><strong>Essential Features:</strong> Online menu with allergies filter, table reservations, prepayment options</li>
+                    <li><strong>Success Metrics:</strong> "Restaurants using our systems report 30% faster table turnover"</li>
+                    <li><strong>Objection Handler:</strong> "Even pizza shops using WhatsApp see 3x more orders with a proper website"</li>
+                </ul>
+                <a href="#" class="download-btn">Download Food Service Pitch Kit</a>
+            </div>
+
+            <div class="type-content" id="professional">
+                <h3>Professional Services Toolkit</h3>
+                <ul>
+                    <li><strong>Key Pain Points:</strong> Credibility questions, time wasted on unqualified leads, scheduling conflicts</li>
+                    <li><strong>Pitch Angle:</strong> "Attract better clients and spend less time on admin"</li>
+                    <li><strong>Essential Features:</strong> Portfolio showcase, client testimonials, online scheduling</li>
+                    <li><strong>Success Metrics:</strong> "Professionals report 50% less time wasted on unqualified inquiries"</li>
+                    <li><strong>Objection Handler:</strong> "Your website works 24/7 to establish trust while you focus on clients"</li>
+                </ul>
+                <a href="#" class="download-btn">Download Professional Pitch Kit</a>
+            </div>
+
+            <div class="type-content" id="manufacturing">
+                <h3>Manufacturing Toolkit</h3>
+                <ul>
+                    <li><strong>Key Pain Points:</strong> Limited buyer reach, outdated product info, inquiry management</li>
+                    <li><strong>Pitch Angle:</strong> "Showcase your capabilities to buyers nationwide"</li>
+                    <li><strong>Essential Features:</strong> Product specifications, certification displays, inquiry forms</li>
+                    <li><strong>Success Metrics:</strong> "Manufacturers average 3x more qualified leads monthly"</li>
+                    <li><strong>Objection Handler:</strong> "Even if you sell through distributors, buyers research suppliers online first"</li>
+                </ul>
+                <a href="#" class="download-btn">Download Manufacturing Pitch Kit</a>
+            </div>
+
+            <div class="type-content" id="services">
+                <h3>Local Services Toolkit</h3>
+                <ul>
+                    <li><strong>Key Pain Points:</strong> Missed calls, last-minute cancellations, price negotiations</li>
+                    <li><strong>Pitch Angle:</strong> "Take control of your schedule and reduce no-shows"</li>
+                    <li><strong>Essential Features:</strong> Online booking with deposits, service packages, after-hours requests</li>
+                    <li><strong>Success Metrics:</strong> "Service businesses report 80% reduction in scheduling headaches"</li>
+                    <li><strong>Objection Handler:</strong> "Clients will pay premium prices when they can book at their convenience"</li>
+                </ul>
+                <a href="#" class="download-btn">Download Services Pitch Kit</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Tab functionality
+        const tabs = document.querySelectorAll('.type-tab');
+        const contents = document.querySelectorAll('.type-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Animate resource cards on scroll
+        const resourceCards = document.querySelectorAll('.resource-card');
+        
+        const animateCards = () => {
+            resourceCards.forEach((card, index) => {
+                const cardPosition = card.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (cardPosition < screenPosition) {
+                    card.style.animation = `fadeIn 0.5s ease forwards ${index * 0.1}s`;
+                    card.style.opacity = '0';
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateCards);
+        animateCards(); // Run once on load
+    </script>
+</body>
+</html>
